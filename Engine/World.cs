@@ -23,7 +23,7 @@
 
         public const int MONSTER_ID_RATO = 1;
         public const int MONSTER_ID_COBRA = 2;
-        public const int MONSTER_ID_COBRA_GIGANTE = 3;
+        public const int MONSTER_ID_ARANHA_GIGANTE = 3;
 
         public const int QUEST_ID_LIMPAR_JARDIM_ALQUIMISTA = 1;
         public const int QUEST_ID_LIMPAR_CAMPO_FAZENDEIROS = 2;
@@ -49,12 +49,12 @@
         private static void PreencherItens()
         {
             Items.Add(new Weapon(ITEM_ID_ESPADA_ENFERRUJADA, "Espada Enferrujada", "Espada Enferrujadas", 0, 5));
+            Items.Add(new Weapon(ITEM_ID_PORRETA, "Porreta", "Porreta", 3, 10));
+            Items.Add(new HealingPotion(ITEM_ID_POCAO_DE_CURA, "Poção de Cura", "Poção de Cura", 5));
             Items.Add(new Item(ITEM_ID_CAUDA_DE_RATO, "Cauda de Rato", "Cauda de Ratos"));
             Items.Add(new Item(ITEM_ID_PEDACO_DE_PELE, "Pedaço de Pele", "Pedaço de Pele"));
             Items.Add(new Item(ITEM_ID_PRESA_DE_COBRA, "Presa de Cobra", "Presa de Cobra"));
             Items.Add(new Item(ITEM_ID_PELE_DE_COBRA, "Pele de Cobra", "Pele de Cobra"));
-            Items.Add(new Weapon(ITEM_ID_PORRETA, "Porreta", "Porreta", 3, 10));
-            Items.Add(new HealingPotion(ITEM_ID_POCAO_DE_CURA,"Poção de Cura", "Poção de Cura", 5));
             Items.Add(new Item(ITEM_ID_PRESA_DE_ARANHA, "Presa de Aranha", "Presa de Aranha"));
             Items.Add(new Item(ITEM_ID_TEIA_DE_ARANHA, "Teia de Aranha", "Teia de Aranha"));
             Items.Add(new Item(ITEM_ID_PASSE_DO_AVENTUREIRO,"Passe do Aventureiro", "Passe do Aventureiro"));
@@ -70,24 +70,28 @@
             cobra.LootTable.Add(new LootItem(ItemByID(ITEM_ID_PRESA_DE_COBRA), 75, false));
             cobra.LootTable.Add(new LootItem(ItemByID(ITEM_ID_PELE_DE_COBRA), 75, true));
 
-            Monster cobraGigante = new Monster(MONSTER_ID_COBRA_GIGANTE, "Aranha Gigante", 20, 5, 40, 10, 10);
-            cobraGigante.LootTable.Add(new LootItem(ItemByID(ITEM_ID_PRESA_DE_ARANHA), 75, true));
-            cobraGigante.LootTable.Add(new LootItem(ItemByID(ITEM_ID_TEIA_DE_ARANHA), 25, false));
+            Monster aranhaGigante = new Monster(MONSTER_ID_ARANHA_GIGANTE, "Aranha Gigante", 20, 5, 40, 10, 10);
+            aranhaGigante.LootTable.Add(new LootItem(ItemByID(ITEM_ID_PRESA_DE_ARANHA), 75, true));
+            aranhaGigante.LootTable.Add(new LootItem(ItemByID(ITEM_ID_TEIA_DE_ARANHA), 25, false));
 
             Monsters.Add(rato);
             Monsters.Add(cobra);
-            Monsters.Add(cobraGigante);
+            Monsters.Add(aranhaGigante);
         }
 
         private static void PreencherQuests()
         {
-            Quest limparJardimAlquimista = new Quest(QUEST_ID_LIMPAR_JARDIM_ALQUIMISTA, "Limpe o jardim do Alquimista", "Mate os ratos no jardim do Alquimista e traga de volta 3 caudas de rato. Você receberá uma Poção de Cura e 10 peças de Ouro.", 20, 10);
+            Quest limparJardimAlquimista = new Quest(QUEST_ID_LIMPAR_JARDIM_ALQUIMISTA,
+                    "Limpe o jardim do Alquimista",
+                    "Mate os ratos no jardim do Alquimista e traga de volta 3 caudas de rato. Você receberá uma Poção de Cura e 10 peças de Ouro.", 20, 10);
 
             limparJardimAlquimista.QuestCompletionItems.Add(new QuestCompletionItem(ItemByID(ITEM_ID_CAUDA_DE_RATO), 3));
 
             limparJardimAlquimista.RewardItem = ItemByID(ITEM_ID_POCAO_DE_CURA);
 
-            Quest LimparFazenda = new Quest(QUEST_ID_LIMPAR_CAMPO_FAZENDEIROS, "Limpe a Fazenda", "Mate Cobras na Fazenda e traga de volta 3 presas de cobra. Você receberá um Passe do Aventureiro e 20 peças de ouro", 20, 20);
+            Quest LimparFazenda = new Quest(QUEST_ID_LIMPAR_CAMPO_FAZENDEIROS,
+                    "Limpe a Fazenda",
+                    "Mate Cobras na Fazenda e traga de volta 3 presas de cobra. Você receberá um Passe do Aventureiro e 20 peças de ouro", 20, 20);
 
             LimparFazenda.QuestCompletionItems.Add(new QuestCompletionItem(ItemByID(ITEM_ID_PRESA_DE_COBRA), 3));
 
@@ -100,28 +104,48 @@
         private static void PreencherLocais()
         {
             // Create each location
-            Location casa = new Location(LOCATION_ID_CASA, "Casa", "Sua casa. Você realmente precisa limpar esse lugar...");
+            Location casa = new Location(LOCATION_ID_CASA,
+                "Casa",
+                "Sua casa. Você realmente precisa limpar esse lugar...");
 
-            Location pracaDaCidade = new Location(LOCATION_ID_PRACA_DA_CIDADE, "Praça da Cidade", "Você vê uma fonte.");
+            Location pracaDaCidade = new Location(LOCATION_ID_PRACA_DA_CIDADE,
+                "Praça da Cidade",
+                "Você vê uma fonte.");
 
-            Location cabanaDoAlquimista = new Location(LOCATION_ID_CABANA_DO_ALQUIMISTA, "Cabana do Alquimista", "Tem muitas plantas estranhas nas prateleiras.");
+            Location cabanaDoAlquimista = new Location(LOCATION_ID_CABANA_DO_ALQUIMISTA, 
+                "Cabana do Alquimista",
+                "Tem muitas plantas estranhas nas prateleiras.");
+
             cabanaDoAlquimista.QuestAvailableHere = QuestByID(QUEST_ID_LIMPAR_JARDIM_ALQUIMISTA);
 
-            Location jardimDoAlqumista = new Location(LOCATION_ID_JARDIM_DO_ALQUIMISTA, "Jardim do Alquimista", "Muitas plantas crescendo aqui.");
+            Location jardimDoAlqumista = new Location(LOCATION_ID_JARDIM_DO_ALQUIMISTA,
+                "Jardim do Alquimista",
+                "Muitas plantas crescendo aqui.");
             jardimDoAlqumista.MonsterLivingHere = MonsterByID(MONSTER_ID_RATO);
 
-            Location fazenda = new Location(LOCATION_ID_FAZENDA, "Fazenda", "Há uma pequena cabana, com um fazendeiro na frente.");
+            Location fazenda = new Location(LOCATION_ID_FAZENDA,
+                "Fazenda",
+                "Há uma pequena cabana, com um fazendeiro na frente.");
             fazenda.QuestAvailableHere = QuestByID(QUEST_ID_LIMPAR_CAMPO_FAZENDEIROS);
 
-            Location campoDeAgricultura = new Location(LOCATION_ID_CAMPO_DE_AGRICULTURA, "Campo de Agricultura", "Você vê vários vegetais crescendo aqui.");
+            Location campoDeAgricultura = new Location(LOCATION_ID_CAMPO_DE_AGRICULTURA,
+                "Campo de Agricultura", 
+                "Você vê vários vegetais crescendo aqui.");
             campoDeAgricultura.MonsterLivingHere = MonsterByID(MONSTER_ID_COBRA);
 
-            Location postoDeGuarda = new Location(LOCATION_ID_POSTO_DE_GUARDA, "Posto de Guarda", "Você enxerga um guarda com aparência de durão aqui.", ItemByID(ITEM_ID_PASSE_DO_AVENTUREIRO));
+            Location postoDeGuarda = new Location(LOCATION_ID_POSTO_DE_GUARDA, 
+                "Posto de Guarda",
+                "Você enxerga um guarda com aparência de durão aqui.",
+                ItemByID(ITEM_ID_PASSE_DO_AVENTUREIRO));
 
-            Location ponte = new Location(LOCATION_ID_PONTE, "Ponte", "Uma ponte de pedra que atravessa um rio.");
+            Location ponte = new Location(LOCATION_ID_PONTE, 
+                "Ponte",
+                "Uma ponte de pedra que atravessa um rio.");
 
-            Location campoDaCobra = new Location(LOCATION_ID_CAMPO_DA_COBRA, "Floresta", "Você vê teias de aranha cobrindo as arvores nessa floresta...");
-            campoDaCobra.MonsterLivingHere = MonsterByID(MONSTER_ID_COBRA_GIGANTE);
+            Location campoDaCobra = new Location(LOCATION_ID_CAMPO_DA_COBRA,
+                "Floresta",
+                "Você vê teias de aranha cobrindo as arvores nessa floresta...");
+            campoDaCobra.MonsterLivingHere = MonsterByID(MONSTER_ID_ARANHA_GIGANTE);
 
             // Link the locations together
             casa.LocationToNorth = pracaDaCidade;
