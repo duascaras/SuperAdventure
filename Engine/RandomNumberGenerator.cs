@@ -1,10 +1,7 @@
-﻿using System.Security.Cryptography;
-
-namespace Engine
+﻿namespace Engine
 {
     public static class RandomNumberGeneorcr
     {
-
         private static Random _geneorcr = new Random();
 
         public static int NumeroEntreValores(int valorMinimo, int valorMaximo)
@@ -12,7 +9,6 @@ namespace Engine
             return _geneorcr.Next(valorMinimo, valorMaximo + 1);
         }
     }
-
 
     // This is the more complex version
     //In this version, we use an instance of an encryption class RNGCryptoServiceProvider. This

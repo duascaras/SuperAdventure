@@ -1,4 +1,5 @@
 using Engine;
+using System.Media;
 
 namespace SuperAdventure
 {
@@ -11,7 +12,7 @@ namespace SuperAdventure
         {
             InitializeComponent();
 
-            _player = new Player(10, 10, 20, 0, 1);
+            _player = new Player(10, 10, 20, 0);
             MoveTo(World.LocationByID(World.LOCATION_ID_CASA));
             _player.Inventory.Add(new InventoryItem(World.ItemByID(World.ITEM_ID_ESPADA_ENFERRUJADA), 1));
             _player.Inventory.Add(new InventoryItem(World.ItemByID(World.ITEM_ID_PORRETA), 1));
@@ -22,6 +23,12 @@ namespace SuperAdventure
             lblLevel.Text = _player.Level.ToString();
         }
 
+        private void ScrollToBottomOfMessages()
+        {
+            rtbMensagens.SelectionStart = rtbMensagens.Text.Length;
+            rtbMensagens.ScrollToCaret();
+        }
+
         private void MoveTo(Location newLocation)
         {
             if (!_player.HasRequiredItemToEnterThisLocation(newLocation))
@@ -30,6 +37,8 @@ namespace SuperAdventure
                     "Você preecisa possuir " +
                     newLocation.ItemRequiredToEnter.Name +
                     " para acessar esse local." + Environment.NewLine;
+
+                ScrollToBottomOfMessages();
                 return;
             }
 
@@ -67,6 +76,8 @@ namespace SuperAdventure
                         {
                             rtbMensagens.Text += Environment.NewLine;
                             rtbMensagens.Text += "Você completou a " + newLocation.QuestAvailableHere.Name + " quest." + Environment.NewLine;
+                            SoundPlayer simpleSound = new SoundPlayer(@"c:\Windows\Media\MissionCompleted.wav");
+                            simpleSound.Play();
 
                             _player.RemoveQuestCompletionItems(newLocation.QuestAvailableHere);
 
@@ -82,6 +93,8 @@ namespace SuperAdventure
                             _player.AddItemToInventory(newLocation.QuestAvailableHere.RewardItem);
 
                             _player.MarkQuestCompleted(newLocation.QuestAvailableHere);
+
+                            lblExperience.Text = _player.ExperiencePoints.ToString();
                         }
                     }
                 }
@@ -145,6 +158,8 @@ namespace SuperAdventure
             UpdateWeaponListInUI();
             // Refresh player's potions combobox
             UpdatePotionListInUI();
+
+            ScrollToBottomOfMessages();
         }
 
         private void UpdateInventoryListInUI()
@@ -285,6 +300,8 @@ namespace SuperAdventure
                  _currentMonster.RewardExperiencePoints.ToString() +
                  " pontos de experiência" + Environment.NewLine;
 
+                lblExperience.Text = _player.ExperiencePoints.ToString();
+
                 // Give player gold for killing the monster
                 _player.Gold += _currentMonster.RewardGold;
                 rtbMensagens.Text += "Você recebeu" +
@@ -370,13 +387,14 @@ namespace SuperAdventure
                 {
                     // Display message
                     //rtbMensagens.Text += "The " + _currentMonster.Name + " killed you." +
-                    rtbMensagens.Text += "YOU DIED" + 
+                    rtbMensagens.Text += "Você morreu " +
                     Environment.NewLine;
 
                     // Move player to "Home"
                     MoveTo(World.LocationByID(World.LOCATION_ID_CASA));
                 }
             }
+            ScrollToBottomOfMessages();
         }
 
         private void btnUsarPocao_Click(object sender, EventArgs e)
@@ -423,7 +441,7 @@ namespace SuperAdventure
             {
                 // Display message
                 //rtbMensagens.Text += "The " + _currentMonster.Name + " killed you." +
-                rtbMensagens.Text += "YOU DIED" + 
+                rtbMensagens.Text += "Você morreu." +
                 Environment.NewLine;
 
                 // Move player to "Home"
@@ -434,6 +452,7 @@ namespace SuperAdventure
             lblHitPoints.Text = _player.CurrentHitPoints.ToString();
             UpdateInventoryListInUI();
             UpdatePotionListInUI();
+            ScrollToBottomOfMessages();
         }
     }
 }

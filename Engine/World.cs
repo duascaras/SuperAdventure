@@ -20,13 +20,14 @@
         public const int ITEM_ID_CABECA = 8;
         public const int ITEM_ID_ESPADA_DE_GAIL = 9;
         public const int ITEM_ID_MOEDA = 10;
+        public const int ITEM_ID_MEDALHA_DE_VENCEDOR = 11;
 
         public const int MONSTER_ID_ORC = 1;
         public const int MONSTER_ID_MORTO_VIVO = 2;
         public const int MONSTER_ID_MUNRAH = 3;
         public const int MONSTER_ID_GAIL = 4;
 
-        public const int QUEST_ID_LUTA = 1;
+        public const int QUEST_ID_LUTA_GAIL = 1;
         public const int QUEST_ID_MATAR_ORC = 2;
         public const int QUEST_ID_LUTA_FINAL = 3;
 
@@ -60,12 +61,12 @@
             Items.Add(new Item(ITEM_ID_CABECA, "Cabeça de Munrah", "Cabeça de Munrah"));
             Items.Add(new Item(ITEM_ID_ESPADA_DE_GAIL, "Espada do Gail", "Espada do Gail"));
             Items.Add(new Item(ITEM_ID_MOEDA, "Moeda", "Moeda"));
+            Items.Add(new Item(ITEM_ID_MEDALHA_DE_VENCEDOR, "Moeda de Vencedor", "Moeda de Vencedor"));
         }
 
         private static void PreencherMonstros()
         {
             Monster orc = new Monster(MONSTER_ID_ORC, "Orc", 5, 3, 10, 3, 3);
-
             orc.LootTable.Add(new LootItem(ItemByID(ITEM_ID_OLHO_DE_ORC), 75, true));
 
             Monster mortoVivo = new Monster(MONSTER_ID_MORTO_VIVO, "Morto-Vivo", 5, 3, 10, 3, 3);
@@ -85,7 +86,7 @@
 
         private static void PreencherQuests()
         {
-            Quest lutarComGail = new Quest(QUEST_ID_LUTA,
+            Quest lutarComGail = new Quest(QUEST_ID_LUTA_GAIL,
                     "Lute com o Gail",
                     "Lute e ganhe de Lorthus Gail. Você receberá uma Poção de Cura e uma espada.", 20, 0);
 
@@ -107,6 +108,8 @@
 
             matarMunrah.QuestCompletionItems.Add(new QuestCompletionItem(ItemByID(ITEM_ID_CABECA), 1));
 
+            matarMunrah.RewardItem = ItemByID(ITEM_ID_MEDALHA_DE_VENCEDOR);
+
             Quests.Add(matarMunrah);
             Quests.Add(lutarComGail);
             Quests.Add(matarOrc);
@@ -126,7 +129,7 @@
             Location lojaDoGail = new Location(LOCATION_ID_DIREITA1,
                 "Loja do Lorthus Gail",
                 "Vamos fazer negocios hoje?");
-            lojaDoGail.QuestAvailableHere = QuestByID(QUEST_ID_LUTA);
+            lojaDoGail.QuestAvailableHere = QuestByID(QUEST_ID_LUTA_GAIL);
 
             Location quintalDoGail = new Location(LOCATION_ID_QUINTAL,
                 "Quintal do Gail",
@@ -145,10 +148,12 @@
 
             Location cidadeAbandonada = new Location(LOCATION_ID_CIMA1,
                 "Um lugar abandonada da cidade.",
-                "Você encontra um mural de avisos que te chama atenção.");
-            cidadeAbandonada.MonsterLivingHere = MonsterByID(MONSTER_ID_MORTO_VIVO);
+                "Você encontra um mural de avisos que te chama atenção.",
+                ItemByID(ITEM_ID_CHAVE));
             cidadeAbandonada.QuestAvailableHere = QuestByID(QUEST_ID_LUTA_FINAL);
-            ItemByID(ITEM_ID_CHAVE);
+            //cidadeAbandonada.MonsterLivingHere = MonsterByID(MONSTER_ID_MORTO_VIVO);
+            //cidadeAbandonada.QuestAvailableHere = QuestByID(QUEST_ID_LUTA_FINAL);
+            //ItemByID(ITEM_ID_CHAVE);
 
             Location centro = new Location(LOCATION_ID_CENTRO,
                 "O centro é lugar movimentado.",
