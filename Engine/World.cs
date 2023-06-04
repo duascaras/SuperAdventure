@@ -20,13 +20,16 @@
         public const int ITEM_ID_PRESA_DE_ARANHA = 8;
         public const int ITEM_ID_TEIA_DE_ARANHA = 9;
         public const int ITEM_ID_PASSE_DO_AVENTUREIRO = 10;
+        public const int ITEM_ID_CHAVE_DO_VENCEDOR = 11;
 
         public const int MONSTER_ID_RATO = 1;
         public const int MONSTER_ID_COBRA = 2;
         public const int MONSTER_ID_ARANHA_GIGANTE = 3;
+        public const int MONSTER_ID_KNIGHT_GAEL = 4;
 
         public const int QUEST_ID_LIMPAR_JARDIM_ALQUIMISTA = 1;
         public const int QUEST_ID_LIMPAR_CAMPO_FAZENDEIROS = 2;
+        public const int QUEST_ID_FINAL_BOSS = 3;
 
         public const int LOCATION_ID_CASA = 1;
         public const int LOCATION_ID_PRACA_DA_CIDADE = 2;
@@ -74,9 +77,13 @@
             aranhaGigante.LootTable.Add(new LootItem(ItemByID(ITEM_ID_PRESA_DE_ARANHA), 75, true));
             aranhaGigante.LootTable.Add(new LootItem(ItemByID(ITEM_ID_TEIA_DE_ARANHA), 25, false));
 
+            Monster knightGael = new Monster(MONSTER_ID_KNIGHT_GAEL, "Knight Gael", 25, 10, 50, 10, 10);
+            knightGael.LootTable.Add(new LootItem(ItemByID(ITEM_ID_CHAVE_DO_VENCEDOR), 100, true));
+
             Monsters.Add(rato);
             Monsters.Add(cobra);
             Monsters.Add(aranhaGigante);
+            Monsters.Add(knightGael);
         }
 
         private static void PreencherQuests()

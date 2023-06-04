@@ -14,6 +14,7 @@ namespace SuperAdventure
             _player = new Player(10, 10, 20, 0, 1);
             MoveTo(World.LocationByID(World.LOCATION_ID_CASA));
             _player.Inventory.Add(new InventoryItem(World.ItemByID(World.ITEM_ID_ESPADA_ENFERRUJADA), 1));
+            _player.Inventory.Add(new InventoryItem(World.ItemByID(World.ITEM_ID_PORRETA), 1));
 
             lblHitPoints.Text = _player.CurrentHitPoints.ToString();
             lblGold.Text = _player.Gold.ToString();
@@ -26,9 +27,9 @@ namespace SuperAdventure
             if (!_player.HasRequiredItemToEnterThisLocation(newLocation))
             {
                 rtbMensagens.Text +=
-                    "Você preecisa " +
+                    "Você preecisa possuir " +
                     newLocation.ItemRequiredToEnter.Name +
-                    "pra acessar esse local." + Environment.NewLine;
+                    " para acessar esse local." + Environment.NewLine;
                 return;
             }
 
@@ -150,9 +151,9 @@ namespace SuperAdventure
         {
             dgvInventorio.RowHeadersVisible = false;
             dgvInventorio.ColumnCount = 2;
-            dgvInventorio.Columns[0].Name = "Name";
+            dgvInventorio.Columns[0].Name = "Nome";
             dgvInventorio.Columns[0].Width = 197;
-            dgvInventorio.Columns[1].Name = "Quantity";
+            dgvInventorio.Columns[1].Name = "Quantidade";
             dgvInventorio.Rows.Clear();
             foreach (InventoryItem inventoryItem in _player.Inventory)
             {
@@ -167,9 +168,9 @@ namespace SuperAdventure
         {
             dgvQuests.RowHeadersVisible = false;
             dgvQuests.ColumnCount = 2;
-            dgvQuests.Columns[0].Name = "Name";
+            dgvQuests.Columns[0].Name = "Nome";
             dgvQuests.Columns[0].Width = 197;
-            dgvQuests.Columns[1].Name = "Done?";
+            dgvQuests.Columns[1].Name = "Finalizado?";
             dgvQuests.Rows.Clear();
             foreach (PlayerQuest playerQuest in _player.Quests)
             {
@@ -267,27 +268,27 @@ namespace SuperAdventure
             _currentMonster.CurrentHitPoints -= damageToMonster;
 
             // Display message
-            rtbMensagens.Text += "You hit the " + _currentMonster.Name + " for " +
-            damageToMonster.ToString() + " points." + Environment.NewLine;
+            rtbMensagens.Text += "Você deu " + _currentMonster.Name + " pontos de " +
+            damageToMonster.ToString() + " dano." + Environment.NewLine;
 
             // Check if the monster is dead
             if (_currentMonster.CurrentHitPoints <= 0)
             {
                 // Monster is dead
                 rtbMensagens.Text += Environment.NewLine;
-                rtbMensagens.Text += "You defeated the " + _currentMonster.Name +
+                rtbMensagens.Text += "Você derrotou o " + _currentMonster.Name +
                  Environment.NewLine;
 
                 // Give player experience points for killing the monster
                 _player.ExperiencePoints += _currentMonster.RewardExperiencePoints;
-                rtbMensagens.Text += "You receive " +
+                rtbMensagens.Text += "Você recebeu " +
                  _currentMonster.RewardExperiencePoints.ToString() +
-                 " experience points" + Environment.NewLine;
+                 " pontos de experiência" + Environment.NewLine;
 
                 // Give player gold for killing the monster
                 _player.Gold += _currentMonster.RewardGold;
-                rtbMensagens.Text += "You receive " +
-                _currentMonster.RewardGold.ToString() + " gold" + Environment.NewLine;
+                rtbMensagens.Text += "Você recebeu" +
+                _currentMonster.RewardGold.ToString() + " moedas de ouro" + Environment.NewLine;
 
                 // Get random loot items from the monster
                 List<InventoryItem> lootedItems = new List<InventoryItem>();
@@ -319,13 +320,13 @@ namespace SuperAdventure
 
                     if (inventoryItem.Quantity == 1)
                     {
-                        rtbMensagens.Text += "You loot " +
+                        rtbMensagens.Text += "Você recebeu " +
                          inventoryItem.Quantity.ToString() + " " +
                          inventoryItem.Details.Name + Environment.NewLine;
                     }
                     else
                     {
-                        rtbMensagens.Text += "You loot " +
+                        rtbMensagens.Text += "Você recebeu " +
                        inventoryItem.Quantity.ToString() + " " +
                        inventoryItem.Details.NamePlural + Environment.NewLine;
                     }
@@ -356,8 +357,8 @@ namespace SuperAdventure
                 RandomNumberGenerator.NumeroEntreValores(0, _currentMonster.MaximumDamage);
 
                 // Display message
-                rtbMensagens.Text += "The " + _currentMonster.Name + " did " +
-                damageToPlayer.ToString() + " points of damage." + Environment.NewLine;
+                rtbMensagens.Text += "O " + _currentMonster.Name + " deu " +
+                damageToPlayer.ToString() + " pontos de dano." + Environment.NewLine;
 
                 // Subtract damage from player
                 _player.CurrentHitPoints -= damageToPlayer;
@@ -368,7 +369,8 @@ namespace SuperAdventure
                 if (_player.CurrentHitPoints <= 0)
                 {
                     // Display message
-                    rtbMensagens.Text += "The " + _currentMonster.Name + " killed you." +
+                    //rtbMensagens.Text += "The " + _currentMonster.Name + " killed you." +
+                    rtbMensagens.Text += "YOU DIED" + 
                     Environment.NewLine;
 
                     // Move player to "Home"
@@ -402,7 +404,7 @@ namespace SuperAdventure
             }
 
             // Display message
-            rtbMensagens.Text += "You drink a " + potion.Name + Environment.NewLine;
+            rtbMensagens.Text += "Você bebeu a " + potion.Name + Environment.NewLine;
 
             // Monster gets their turn to attack
 
@@ -411,8 +413,8 @@ namespace SuperAdventure
             RandomNumberGenerator.NumeroEntreValores(0, _currentMonster.MaximumDamage);
 
             // Display message
-            rtbMensagens.Text += "The " + _currentMonster.Name + " did " +
-            damageToPlayer.ToString() + " points of damage." + Environment.NewLine;
+            rtbMensagens.Text += "O " + _currentMonster.Name + " deu " +
+            damageToPlayer.ToString() + " pontos de dano." + Environment.NewLine;
 
             // Subtract damage from player
             _player.CurrentHitPoints -= damageToPlayer;
@@ -420,7 +422,8 @@ namespace SuperAdventure
             if (_player.CurrentHitPoints <= 0)
             {
                 // Display message
-                rtbMensagens.Text += "The " + _currentMonster.Name + " killed you." +
+                //rtbMensagens.Text += "The " + _currentMonster.Name + " killed you." +
+                rtbMensagens.Text += "YOU DIED" + 
                 Environment.NewLine;
 
                 // Move player to "Home"

@@ -16,7 +16,6 @@ namespace Engine
         public Item RewardItem { get; set; }
         public List<QuestCompletionItem> QuestCompletionItems { get; set; }
 
-        //TODO - Verificar se a propriedade Item não deve entrar no Construtor como "Null"
         public Quest(int id, string name, string description, int rewardExperiencePoints, int rewardGold)
         {
             ID = id;
