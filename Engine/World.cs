@@ -11,35 +11,35 @@
         public static readonly List<Location> Locations = new List<Location>();
 
         public const int ITEM_ID_ESPADA_ENFERRUJADA = 1;
-        public const int ITEM_ID_CAUDA_DE_RATO = 2;
-        public const int ITEM_ID_PEDACO_DE_PELE = 3;
-        public const int ITEM_ID_PRESA_DE_COBRA = 4;
-        public const int ITEM_ID_PELE_DE_COBRA = 5;
+        public const int ITEM_ID_CHAVE = 2;
+        public const int ITEM_ID_OLHO_DE_ORC = 3;
+        public const int ITEM_ID_PEDACO_CARNE_PODRE = 4;
+        public const int ITEM_ID_PEDACO_DE_CARNE = 5;
         public const int ITEM_ID_PORRETA = 6;
         public const int ITEM_ID_POCAO_DE_CURA = 7;
-        public const int ITEM_ID_PRESA_DE_ARANHA = 8;
-        public const int ITEM_ID_TEIA_DE_ARANHA = 9;
-        public const int ITEM_ID_PASSE_DO_AVENTUREIRO = 10;
-        public const int ITEM_ID_CHAVE_DO_VENCEDOR = 11;
+        public const int ITEM_ID_CABECA = 8;
+        public const int ITEM_ID_ESPADA_DE_GAIL = 9;
+        public const int ITEM_ID_MOEDA = 10;
 
-        public const int MONSTER_ID_RATO = 1;
-        public const int MONSTER_ID_COBRA = 2;
-        public const int MONSTER_ID_ARANHA_GIGANTE = 3;
-        public const int MONSTER_ID_KNIGHT_GAEL = 4;
+        public const int MONSTER_ID_ORC = 1;
+        public const int MONSTER_ID_MORTO_VIVO = 2;
+        public const int MONSTER_ID_MUNRAH = 3;
+        public const int MONSTER_ID_GAIL = 4;
 
-        public const int QUEST_ID_LIMPAR_JARDIM_ALQUIMISTA = 1;
-        public const int QUEST_ID_LIMPAR_CAMPO_FAZENDEIROS = 2;
-        public const int QUEST_ID_FINAL_BOSS = 3;
+        public const int QUEST_ID_LUTA = 1;
+        public const int QUEST_ID_MATAR_ORC = 2;
+        public const int QUEST_ID_LUTA_FINAL = 3;
 
         public const int LOCATION_ID_CASA = 1;
-        public const int LOCATION_ID_PRACA_DA_CIDADE = 2;
-        public const int LOCATION_ID_POSTO_DE_GUARDA = 3;
-        public const int LOCATION_ID_CABANA_DO_ALQUIMISTA = 4;
-        public const int LOCATION_ID_JARDIM_DO_ALQUIMISTA = 5;
-        public const int LOCATION_ID_FAZENDA = 6;
-        public const int LOCATION_ID_CAMPO_DE_AGRICULTURA = 7;
-        public const int LOCATION_ID_PONTE = 8;
-        public const int LOCATION_ID_CAMPO_DA_COBRA = 9;
+        public const int LOCATION_ID_FLORESTA = 2;
+        public const int LOCATION_ID_CENTRO = 3;
+        public const int LOCATION_ID_DIREITA1 = 4;
+        public const int LOCATION_ID_ESQUERDA1 = 5;
+        public const int LOCATION_ID_ESQUERDA2 = 6;
+        public const int LOCATION_ID_CIMA1 = 7;
+        public const int LOCATION_ID_CIMA2 = 8;
+        public const int LOCATION_ID_CIMA3 = 9;
+        public const int LOCATION_ID_QUINTAL = 10;
 
         static World()
         {
@@ -54,58 +54,62 @@
             Items.Add(new Weapon(ITEM_ID_ESPADA_ENFERRUJADA, "Espada Enferrujada", "Espada Enferrujadas", 0, 5));
             Items.Add(new Weapon(ITEM_ID_PORRETA, "Porreta", "Porreta", 3, 10));
             Items.Add(new HealingPotion(ITEM_ID_POCAO_DE_CURA, "Poção de Cura", "Poção de Cura", 5));
-            Items.Add(new Item(ITEM_ID_CAUDA_DE_RATO, "Cauda de Rato", "Cauda de Ratos"));
-            Items.Add(new Item(ITEM_ID_PEDACO_DE_PELE, "Pedaço de Pele", "Pedaço de Pele"));
-            Items.Add(new Item(ITEM_ID_PRESA_DE_COBRA, "Presa de Cobra", "Presa de Cobra"));
-            Items.Add(new Item(ITEM_ID_PELE_DE_COBRA, "Pele de Cobra", "Pele de Cobra"));
-            Items.Add(new Item(ITEM_ID_PRESA_DE_ARANHA, "Presa de Aranha", "Presa de Aranha"));
-            Items.Add(new Item(ITEM_ID_TEIA_DE_ARANHA, "Teia de Aranha", "Teia de Aranha"));
-            Items.Add(new Item(ITEM_ID_PASSE_DO_AVENTUREIRO,"Passe do Aventureiro", "Passe do Aventureiro"));
+            Items.Add(new Item(ITEM_ID_CHAVE, "Chave", "Chave"));
+            Items.Add(new Item(ITEM_ID_OLHO_DE_ORC, "Olho de Orc", "Olho de Orc"));
+            Items.Add(new Item(ITEM_ID_PEDACO_CARNE_PODRE, "Pedaço de Carne Podre", "Pedaço de Carne Podre"));
+            Items.Add(new Item(ITEM_ID_CABECA, "Cabeça de Munrah", "Cabeça de Munrah"));
+            Items.Add(new Item(ITEM_ID_ESPADA_DE_GAIL, "Espada do Gail", "Espada do Gail"));
+            Items.Add(new Item(ITEM_ID_MOEDA, "Moeda", "Moeda"));
         }
 
         private static void PreencherMonstros()
         {
-            Monster rato = new Monster(MONSTER_ID_RATO, "Rato", 5, 3, 10, 3, 3);
-            rato.LootTable.Add(new LootItem(ItemByID(ITEM_ID_CAUDA_DE_RATO), 75, false));
-            rato.LootTable.Add(new LootItem(ItemByID(ITEM_ID_PEDACO_DE_PELE), 75, true));
+            Monster orc = new Monster(MONSTER_ID_ORC, "Orc", 5, 3, 10, 3, 3);
 
-            Monster cobra = new Monster(MONSTER_ID_COBRA, "Cobra", 5, 3, 10, 3, 3);
-            cobra.LootTable.Add(new LootItem(ItemByID(ITEM_ID_PRESA_DE_COBRA), 75, false));
-            cobra.LootTable.Add(new LootItem(ItemByID(ITEM_ID_PELE_DE_COBRA), 75, true));
+            orc.LootTable.Add(new LootItem(ItemByID(ITEM_ID_OLHO_DE_ORC), 75, true));
 
-            Monster aranhaGigante = new Monster(MONSTER_ID_ARANHA_GIGANTE, "Aranha Gigante", 20, 5, 40, 10, 10);
-            aranhaGigante.LootTable.Add(new LootItem(ItemByID(ITEM_ID_PRESA_DE_ARANHA), 75, true));
-            aranhaGigante.LootTable.Add(new LootItem(ItemByID(ITEM_ID_TEIA_DE_ARANHA), 25, false));
+            Monster mortoVivo = new Monster(MONSTER_ID_MORTO_VIVO, "Morto-Vivo", 5, 3, 10, 3, 3);
+            mortoVivo.LootTable.Add(new LootItem(ItemByID(ITEM_ID_PEDACO_CARNE_PODRE), 75, false));
 
-            Monster knightGael = new Monster(MONSTER_ID_KNIGHT_GAEL, "Knight Gael", 25, 10, 50, 10, 10);
-            knightGael.LootTable.Add(new LootItem(ItemByID(ITEM_ID_CHAVE_DO_VENCEDOR), 100, true));
+            Monster munrah = new Monster(MONSTER_ID_MUNRAH, "Munrah", 10, 5, 40, 10, 10);
+            munrah.LootTable.Add(new LootItem(ItemByID(ITEM_ID_CABECA), 75, true));
 
-            Monsters.Add(rato);
-            Monsters.Add(cobra);
-            Monsters.Add(aranhaGigante);
-            Monsters.Add(knightGael);
+            Monster gail = new Monster(MONSTER_ID_GAIL, "Lorthus Gail", 7, 3, 0, 4, 4);
+            gail.LootTable.Add(new LootItem(ItemByID(ITEM_ID_MOEDA), 0, true));
+
+            Monsters.Add(orc);
+            Monsters.Add(mortoVivo);
+            Monsters.Add(munrah);
+            Monsters.Add(gail);
         }
 
         private static void PreencherQuests()
         {
-            Quest limparJardimAlquimista = new Quest(QUEST_ID_LIMPAR_JARDIM_ALQUIMISTA,
-                    "Limpe o jardim do Alquimista",
-                    "Mate os ratos no jardim do Alquimista e traga de volta 3 caudas de rato. Você receberá uma Poção de Cura e 10 peças de Ouro.", 20, 10);
+            Quest lutarComGail = new Quest(QUEST_ID_LUTA,
+                    "Lute com o Gail",
+                    "Lute e ganhe de Lorthus Gail. Você receberá uma Poção de Cura e uma espada.", 20, 0);
 
-            limparJardimAlquimista.QuestCompletionItems.Add(new QuestCompletionItem(ItemByID(ITEM_ID_CAUDA_DE_RATO), 3));
+            lutarComGail.QuestCompletionItems.Add(new QuestCompletionItem(ItemByID(ITEM_ID_MOEDA), 1));
 
-            limparJardimAlquimista.RewardItem = ItemByID(ITEM_ID_POCAO_DE_CURA);
+            lutarComGail.RewardItem = ItemByID(ITEM_ID_ESPADA_DE_GAIL);
 
-            Quest LimparFazenda = new Quest(QUEST_ID_LIMPAR_CAMPO_FAZENDEIROS,
-                    "Limpe a Fazenda",
-                    "Mate Cobras na Fazenda e traga de volta 3 presas de cobra. Você receberá um Passe do Aventureiro e 20 peças de ouro", 20, 20);
+            Quest matarOrc = new Quest(QUEST_ID_MATAR_ORC,
+                    "Mate o Orc da Caverna",
+                    "Mate o Orc da Caverna e traga de volta 3 olhos de Orc. Você receberá uma Chave e 20 peças de ouro", 20, 20);
 
-            LimparFazenda.QuestCompletionItems.Add(new QuestCompletionItem(ItemByID(ITEM_ID_PRESA_DE_COBRA), 3));
+            matarOrc.QuestCompletionItems.Add(new QuestCompletionItem(ItemByID(ITEM_ID_OLHO_DE_ORC), 3));
 
-            LimparFazenda.RewardItem = ItemByID(ITEM_ID_PASSE_DO_AVENTUREIRO);
+            matarOrc.RewardItem = ItemByID(ITEM_ID_CHAVE);
 
-            Quests.Add(limparJardimAlquimista);
-            Quests.Add(LimparFazenda);
+            Quest matarMunrah = new Quest(QUEST_ID_LUTA_FINAL,
+                "Mate o Dragão da Torre",
+                "Existe um dragão que vive na antiga torre da cidade abandonada. Alguem precisa mata-lo.", 30, 30);
+
+            matarMunrah.QuestCompletionItems.Add(new QuestCompletionItem(ItemByID(ITEM_ID_CABECA), 1));
+
+            Quests.Add(matarMunrah);
+            Quests.Add(lutarComGail);
+            Quests.Add(matarOrc);
         }
 
         private static void PreencherLocais()
@@ -113,83 +117,91 @@
             // Create each location
             Location casa = new Location(LOCATION_ID_CASA,
                 "Casa",
-                "Sua casa. Você realmente precisa limpar esse lugar...");
+                "Parece tão calmo aqui.");
 
-            Location pracaDaCidade = new Location(LOCATION_ID_PRACA_DA_CIDADE,
-                "Praça da Cidade",
-                "Você vê uma fonte.");
-
-            Location cabanaDoAlquimista = new Location(LOCATION_ID_CABANA_DO_ALQUIMISTA, 
-                "Cabana do Alquimista",
-                "Tem muitas plantas estranhas nas prateleiras.");
-
-            cabanaDoAlquimista.QuestAvailableHere = QuestByID(QUEST_ID_LIMPAR_JARDIM_ALQUIMISTA);
-
-            Location jardimDoAlqumista = new Location(LOCATION_ID_JARDIM_DO_ALQUIMISTA,
-                "Jardim do Alquimista",
-                "Muitas plantas crescendo aqui.");
-            jardimDoAlqumista.MonsterLivingHere = MonsterByID(MONSTER_ID_RATO);
-
-            Location fazenda = new Location(LOCATION_ID_FAZENDA,
-                "Fazenda",
-                "Há uma pequena cabana, com um fazendeiro na frente.");
-            fazenda.QuestAvailableHere = QuestByID(QUEST_ID_LIMPAR_CAMPO_FAZENDEIROS);
-
-            Location campoDeAgricultura = new Location(LOCATION_ID_CAMPO_DE_AGRICULTURA,
-                "Campo de Agricultura", 
-                "Você vê vários vegetais crescendo aqui.");
-            campoDeAgricultura.MonsterLivingHere = MonsterByID(MONSTER_ID_COBRA);
-
-            Location postoDeGuarda = new Location(LOCATION_ID_POSTO_DE_GUARDA, 
-                "Posto de Guarda",
-                "Você enxerga um guarda com aparência de durão aqui.",
-                ItemByID(ITEM_ID_PASSE_DO_AVENTUREIRO));
-
-            Location ponte = new Location(LOCATION_ID_PONTE, 
-                "Ponte",
-                "Uma ponte de pedra que atravessa um rio.");
-
-            Location campoDaCobra = new Location(LOCATION_ID_CAMPO_DA_COBRA,
+            Location floresta = new Location(LOCATION_ID_FLORESTA,
                 "Floresta",
-                "Você vê teias de aranha cobrindo as arvores nessa floresta...");
-            campoDaCobra.MonsterLivingHere = MonsterByID(MONSTER_ID_ARANHA_GIGANTE);
+                "As arvores daqui são realmente belas.");
+
+            Location lojaDoGail = new Location(LOCATION_ID_DIREITA1,
+                "Loja do Lorthus Gail",
+                "Vamos fazer negocios hoje?");
+            lojaDoGail.QuestAvailableHere = QuestByID(QUEST_ID_LUTA);
+
+            Location quintalDoGail = new Location(LOCATION_ID_QUINTAL,
+                "Quintal do Gail",
+                "Você avista um ringue, ele parece fazer isso sempre...");
+            quintalDoGail.MonsterLivingHere = MonsterByID(MONSTER_ID_GAIL);
+
+            Location barDoMoe = new Location(LOCATION_ID_ESQUERDA1,
+                "O bar do incrivel Moe.",
+                "Tem muita gente estranha aqui.");
+            barDoMoe.QuestAvailableHere = QuestByID(QUEST_ID_MATAR_ORC);
+
+            Location cavernaDoOrc = new Location(LOCATION_ID_ESQUERDA2,
+                "Uma caverna escura.",
+                "Você ouve muitos barulhos incompreensíveis.");
+            cavernaDoOrc.MonsterLivingHere = MonsterByID(MONSTER_ID_ORC);
+
+            Location cidadeAbandonada = new Location(LOCATION_ID_CIMA1,
+                "Um lugar abandonada da cidade.",
+                "Você encontra um mural de avisos que te chama atenção.");
+            cidadeAbandonada.MonsterLivingHere = MonsterByID(MONSTER_ID_MORTO_VIVO);
+            cidadeAbandonada.QuestAvailableHere = QuestByID(QUEST_ID_LUTA_FINAL);
+            ItemByID(ITEM_ID_CHAVE);
+
+            Location centro = new Location(LOCATION_ID_CENTRO,
+                "O centro é lugar movimentado.",
+                "Tem bastante comercio por aqui.");
+
+            Location ponte = new Location(LOCATION_ID_CIMA2,
+                "Ponte",
+                "Uma ponte de pedra que atravessa um rio." + Environment.NewLine + "Gravado em uma placa você lê: PELO AMOR DE DEUS, EXTERMINE MUNRAH DA TERRA!!!");
+
+            Location torreDoDragao = new Location(LOCATION_ID_CIMA3,
+                "Uma torre alta.",
+                "Você vê restos do que já foi uma igreja..." + Environment.NewLine + "O som parece perturbador.");
+            torreDoDragao.MonsterLivingHere = MonsterByID(MONSTER_ID_MUNRAH);
 
             // Link the locations together
-            casa.LocationToNorth = pracaDaCidade;
+            casa.LocationToNorth = floresta;
 
-            pracaDaCidade.LocationToNorth = cabanaDoAlquimista;
-            pracaDaCidade.LocationToSouth = casa;
-            pracaDaCidade.LocationToEast = postoDeGuarda;
-            pracaDaCidade.LocationToWest = fazenda;
+            floresta.LocationToNorth = centro;
+            floresta.LocationToSouth = casa;
 
-            fazenda.LocationToEast = pracaDaCidade;
-            fazenda.LocationToWest = campoDeAgricultura;
+            centro.LocationToNorth = cidadeAbandonada;
+            centro.LocationToSouth = floresta;
+            centro.LocationToEast = barDoMoe;
+            centro.LocationToWest = lojaDoGail;
 
-            campoDeAgricultura.LocationToEast = fazenda;
+            lojaDoGail.LocationToSouth = quintalDoGail;
+            lojaDoGail.LocationToEast = centro;
 
-            cabanaDoAlquimista.LocationToSouth = pracaDaCidade;
-            cabanaDoAlquimista.LocationToNorth = jardimDoAlqumista;
+            quintalDoGail.LocationToNorth = lojaDoGail;
 
-            jardimDoAlqumista.LocationToSouth = cabanaDoAlquimista;
+            barDoMoe.LocationToWest = centro;
+            barDoMoe.LocationToEast = cavernaDoOrc;
 
-            postoDeGuarda.LocationToEast = ponte;
-            postoDeGuarda.LocationToWest = pracaDaCidade;
+            cavernaDoOrc.LocationToWest = barDoMoe;
 
-            ponte.LocationToWest = postoDeGuarda;
-            ponte.LocationToEast = campoDaCobra;
+            cidadeAbandonada.LocationToSouth = centro;
+            cidadeAbandonada.LocationToNorth = ponte;
 
-            campoDaCobra.LocationToWest = ponte;
+            ponte.LocationToSouth = cidadeAbandonada;
+            ponte.LocationToNorth = torreDoDragao;
+
+            torreDoDragao.LocationToSouth = ponte;
 
             // Add the locations to the static list
             Locations.Add(casa);
-            Locations.Add(pracaDaCidade);
-            Locations.Add(postoDeGuarda);
-            Locations.Add(cabanaDoAlquimista);
-            Locations.Add(jardimDoAlqumista);
-            Locations.Add(fazenda);
-            Locations.Add(campoDeAgricultura);
+            Locations.Add(floresta);
+            Locations.Add(centro);
+            Locations.Add(lojaDoGail);
+            Locations.Add(barDoMoe);
+            Locations.Add(cavernaDoOrc);
+            Locations.Add(cidadeAbandonada);
             Locations.Add(ponte);
-            Locations.Add(campoDaCobra);
+            Locations.Add(torreDoDragao);
         }
 
         public static Item ItemByID(int id)
@@ -245,4 +257,3 @@
         }
     }
 }
-   

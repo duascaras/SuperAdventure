@@ -261,7 +261,7 @@ namespace SuperAdventure
             Weapon currentWeapon = (Weapon)cboArmas.SelectedItem;
 
             // Determine the amount of damage to do to the monster
-            int damageToMonster = RandomNumberGenerator.NumeroEntreValores(
+            int damageToMonster = RandomNumberGeneorcr.NumeroEntreValores(
              currentWeapon.MinimumDamage, currentWeapon.MaximumDamage);
 
             // Apply the damage to the monster's CurrentHitPoints
@@ -296,7 +296,7 @@ namespace SuperAdventure
                 // Add items to the lootedItems list, comparing a random number to the drop percentage
                 foreach (LootItem lootItem in _currentMonster.LootTable)
                 {
-                    if (RandomNumberGenerator.NumeroEntreValores(1, 100) <= lootItem.DropPercentage)
+                    if (RandomNumberGeneorcr.NumeroEntreValores(1, 100) <= lootItem.DropPercentage)
                     {
                         lootedItems.Add(new InventoryItem(lootItem.Details, 1));
                     }
@@ -354,7 +354,7 @@ namespace SuperAdventure
 
                 // Determine the amount of damage the monster does to the player
                 int damageToPlayer =
-                RandomNumberGenerator.NumeroEntreValores(0, _currentMonster.MaximumDamage);
+                RandomNumberGeneorcr.NumeroEntreValores(0, _currentMonster.MaximumDamage);
 
                 // Display message
                 rtbMensagens.Text += "O " + _currentMonster.Name + " deu " +
@@ -410,7 +410,7 @@ namespace SuperAdventure
 
             // Determine the amount of damage the monster does to the player
             int damageToPlayer =
-            RandomNumberGenerator.NumeroEntreValores(0, _currentMonster.MaximumDamage);
+            RandomNumberGeneorcr.NumeroEntreValores(0, _currentMonster.MaximumDamage);
 
             // Display message
             rtbMensagens.Text += "O " + _currentMonster.Name + " deu " +

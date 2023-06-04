@@ -2,14 +2,14 @@
 
 namespace Engine
 {
-    public static class RandomNumberGenerator
+    public static class RandomNumberGeneorcr
     {
 
-        private static Random _generator = new Random();
+        private static Random _geneorcr = new Random();
 
         public static int NumeroEntreValores(int valorMinimo, int valorMaximo)
         {
-            return _generator.Next(valorMinimo, valorMaximo + 1);
+            return _geneorcr.Next(valorMinimo, valorMaximo + 1);
         }
     }
 
@@ -19,13 +19,13 @@ namespace Engine
     //class is better at not following a pattern when it creates random numbers. But we need to
     //do some more math to get a value between the passed in parameters.
 
-    //private static readonly RNGCryptoServiceProvider _generator = new RNGCryptoServiceProvider();
+    //private static readonly RNGCryptoServiceProvider _geneorcr = new RNGCryptoServiceProvider();
 
     //    public static int NumeroEntreValores(int valorMinimo, int valorMaximo)
     //    {
     //        byte[] numeroAleatorio = new byte[1];
 
-    //        _generator.GetBytes(numeroAleatorio);
+    //        _geneorcr.GetBytes(numeroAleatorio);
 
     //        double asciiValorDoCaracterAleatorio = Convert.ToDouble(numeroAleatorio[0]);
 
