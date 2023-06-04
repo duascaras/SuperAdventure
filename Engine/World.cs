@@ -59,17 +59,17 @@
             Items.Add(new Item(ITEM_ID_OLHO_DE_ORC, "Olho de Orc", "Olho de Orc"));
             Items.Add(new Item(ITEM_ID_PEDACO_CARNE_PODRE, "Pedaço de Carne Podre", "Pedaço de Carne Podre"));
             Items.Add(new Item(ITEM_ID_CABECA, "Cabeça de Munrah", "Cabeça de Munrah"));
-            Items.Add(new Item(ITEM_ID_ESPADA_DE_GAIL, "Espada do Gail", "Espada do Gail"));
+            Items.Add(new Weapon(ITEM_ID_ESPADA_DE_GAIL, "Espada do Gail", "Espada do Gail", 1, 9));
             Items.Add(new Item(ITEM_ID_MOEDA, "Moeda", "Moeda"));
             Items.Add(new Item(ITEM_ID_MEDALHA_DE_VENCEDOR, "Moeda de Vencedor", "Moeda de Vencedor"));
         }
 
         private static void PreencherMonstros()
         {
-            Monster orc = new Monster(MONSTER_ID_ORC, "Orc", 5, 3, 10, 3, 3);
+            Monster orc = new Monster(MONSTER_ID_ORC, "Orc", 5, 3, 10, 4, 4);
             orc.LootTable.Add(new LootItem(ItemByID(ITEM_ID_OLHO_DE_ORC), 75, true));
 
-            Monster mortoVivo = new Monster(MONSTER_ID_MORTO_VIVO, "Morto-Vivo", 5, 3, 10, 3, 3);
+            Monster mortoVivo = new Monster(MONSTER_ID_MORTO_VIVO, "Morto-Vivo", 5, 3, 10, 5, 5);
             mortoVivo.LootTable.Add(new LootItem(ItemByID(ITEM_ID_PEDACO_CARNE_PODRE), 75, false));
 
             Monster munrah = new Monster(MONSTER_ID_MUNRAH, "Munrah", 10, 5, 40, 10, 10);

@@ -76,8 +76,8 @@ namespace SuperAdventure
                         {
                             rtbMensagens.Text += Environment.NewLine;
                             rtbMensagens.Text += "Você completou a " + newLocation.QuestAvailableHere.Name + " quest." + Environment.NewLine;
-                            SoundPlayer simpleSound = new SoundPlayer(@"c:\Windows\Media\MissionCompleted.wav");
-                            simpleSound.Play();
+                            //SoundPlayer simpleSound = new SoundPlayer(@"c:\Windows\Media\MissionCompleted.wav");
+                            //simpleSound.Play();
 
                             _player.RemoveQuestCompletionItems(newLocation.QuestAvailableHere);
 
@@ -453,6 +453,13 @@ namespace SuperAdventure
             UpdateInventoryListInUI();
             UpdatePotionListInUI();
             ScrollToBottomOfMessages();
+        }
+
+        private void btnMap_Click(object sender, EventArgs e)
+        {
+            WorldMap telaMapa = new WorldMap();
+            telaMapa.StartPosition = FormStartPosition.CenterParent;
+            telaMapa.ShowDialog(this);
         }
     }
 }
