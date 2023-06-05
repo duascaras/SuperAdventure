@@ -10,6 +10,7 @@
         }
     }
 
+    // ESSA VERSÃO COMPLEXA DEIXA O JOGO MUITO DIFICIL, NAO CURTI
     // This is the more complex version
     //In this version, we use an instance of an encryption class RNGCryptoServiceProvider. This
     //class is better at not following a pattern when it creates random numbers. But we need to

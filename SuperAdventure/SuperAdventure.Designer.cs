@@ -28,281 +28,280 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.label1 = new System.Windows.Forms.Label();
-            this.label2 = new System.Windows.Forms.Label();
-            this.label3 = new System.Windows.Forms.Label();
-            this.label4 = new System.Windows.Forms.Label();
-            this.lblHitPoints = new System.Windows.Forms.Label();
-            this.lblGold = new System.Windows.Forms.Label();
-            this.lblExperience = new System.Windows.Forms.Label();
-            this.lblLevel = new System.Windows.Forms.Label();
-            this.label5 = new System.Windows.Forms.Label();
-            this.cboArmas = new System.Windows.Forms.ComboBox();
-            this.cboPocoes = new System.Windows.Forms.ComboBox();
-            this.btnUsarArma = new System.Windows.Forms.Button();
-            this.btnUsarPocao = new System.Windows.Forms.Button();
-            this.btnNorte = new System.Windows.Forms.Button();
-            this.btnLeste = new System.Windows.Forms.Button();
-            this.btnSul = new System.Windows.Forms.Button();
-            this.btnOeste = new System.Windows.Forms.Button();
-            this.rtbLocal = new System.Windows.Forms.RichTextBox();
-            this.rtbMensagens = new System.Windows.Forms.RichTextBox();
-            this.dgvInventorio = new System.Windows.Forms.DataGridView();
-            this.dgvQuests = new System.Windows.Forms.DataGridView();
-            this.btnMap = new System.Windows.Forms.Button();
-            ((System.ComponentModel.ISupportInitialize)(this.dgvInventorio)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.dgvQuests)).BeginInit();
-            this.SuspendLayout();
+            label1 = new Label();
+            label2 = new Label();
+            label3 = new Label();
+            label4 = new Label();
+            lblHitPoints = new Label();
+            lblGold = new Label();
+            lblExperience = new Label();
+            lblLevel = new Label();
+            label5 = new Label();
+            cboArmas = new ComboBox();
+            cboPocoes = new ComboBox();
+            btnUsarArma = new Button();
+            btnUsarPocao = new Button();
+            btnNorte = new Button();
+            btnLeste = new Button();
+            btnSul = new Button();
+            btnOeste = new Button();
+            rtbLocal = new RichTextBox();
+            rtbMensagens = new RichTextBox();
+            dgvInventorio = new DataGridView();
+            dgvQuests = new DataGridView();
+            btnMap = new Button();
+            ((System.ComponentModel.ISupportInitialize)dgvInventorio).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)dgvQuests).BeginInit();
+            SuspendLayout();
             // 
             // label1
             // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(18, 20);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(62, 15);
-            this.label1.TabIndex = 0;
-            this.label1.Text = "Hit Points:";
+            label1.AutoSize = true;
+            label1.Location = new Point(18, 20);
+            label1.Name = "label1";
+            label1.Size = new Size(62, 15);
+            label1.TabIndex = 0;
+            label1.Text = "Hit Points:";
             // 
             // label2
             // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(18, 46);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(35, 15);
-            this.label2.TabIndex = 1;
-            this.label2.Text = "Gold:";
+            label2.AutoSize = true;
+            label2.Location = new Point(18, 46);
+            label2.Name = "label2";
+            label2.Size = new Size(35, 15);
+            label2.TabIndex = 1;
+            label2.Text = "Ouro:";
             // 
             // label3
             // 
-            this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(18, 74);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(67, 15);
-            this.label3.TabIndex = 2;
-            this.label3.Text = "Experience:";
+            label3.AutoSize = true;
+            label3.Location = new Point(18, 74);
+            label3.Name = "label3";
+            label3.Size = new Size(67, 15);
+            label3.TabIndex = 2;
+            label3.Text = "Experience:";
             // 
             // label4
             // 
-            this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(18, 100);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(37, 15);
-            this.label4.TabIndex = 3;
-            this.label4.Text = "Level:";
+            label4.AutoSize = true;
+            label4.Location = new Point(18, 100);
+            label4.Name = "label4";
+            label4.Size = new Size(37, 15);
+            label4.TabIndex = 3;
+            label4.Text = "Nivel:";
             // 
             // lblHitPoints
             // 
-            this.lblHitPoints.AutoSize = true;
-            this.lblHitPoints.Location = new System.Drawing.Point(110, 19);
-            this.lblHitPoints.Name = "lblHitPoints";
-            this.lblHitPoints.Size = new System.Drawing.Size(0, 15);
-            this.lblHitPoints.TabIndex = 4;
+            lblHitPoints.AutoSize = true;
+            lblHitPoints.Location = new Point(110, 19);
+            lblHitPoints.Name = "lblHitPoints";
+            lblHitPoints.Size = new Size(0, 15);
+            lblHitPoints.TabIndex = 4;
             // 
             // lblGold
             // 
-            this.lblGold.AutoSize = true;
-            this.lblGold.Location = new System.Drawing.Point(110, 45);
-            this.lblGold.Name = "lblGold";
-            this.lblGold.Size = new System.Drawing.Size(0, 15);
-            this.lblGold.TabIndex = 5;
+            lblGold.AutoSize = true;
+            lblGold.Location = new Point(110, 45);
+            lblGold.Name = "lblGold";
+            lblGold.Size = new Size(0, 15);
+            lblGold.TabIndex = 5;
             // 
             // lblExperience
             // 
-            this.lblExperience.AutoSize = true;
-            this.lblExperience.Location = new System.Drawing.Point(110, 73);
-            this.lblExperience.Name = "lblExperience";
-            this.lblExperience.Size = new System.Drawing.Size(0, 15);
-            this.lblExperience.TabIndex = 6;
+            lblExperience.AutoSize = true;
+            lblExperience.Location = new Point(110, 73);
+            lblExperience.Name = "lblExperience";
+            lblExperience.Size = new Size(0, 15);
+            lblExperience.TabIndex = 6;
             // 
             // lblLevel
             // 
-            this.lblLevel.AutoSize = true;
-            this.lblLevel.Location = new System.Drawing.Point(110, 99);
-            this.lblLevel.Name = "lblLevel";
-            this.lblLevel.Size = new System.Drawing.Size(0, 15);
-            this.lblLevel.TabIndex = 7;
+            lblLevel.AutoSize = true;
+            lblLevel.Location = new Point(110, 99);
+            lblLevel.Name = "lblLevel";
+            lblLevel.Size = new Size(0, 15);
+            lblLevel.TabIndex = 7;
             // 
             // label5
             // 
-            this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(617, 531);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(94, 15);
-            this.label5.TabIndex = 8;
-            this.label5.Text = "Selecione a ação";
+            label5.AutoSize = true;
+            label5.Location = new Point(617, 531);
+            label5.Name = "label5";
+            label5.Size = new Size(94, 15);
+            label5.TabIndex = 8;
+            label5.Text = "Selecione a ação";
             // 
             // cboArmas
             // 
-            this.cboArmas.FormattingEnabled = true;
-            this.cboArmas.Location = new System.Drawing.Point(369, 559);
-            this.cboArmas.Name = "cboArmas";
-            this.cboArmas.Size = new System.Drawing.Size(121, 23);
-            this.cboArmas.TabIndex = 9;
+            cboArmas.FormattingEnabled = true;
+            cboArmas.Location = new Point(369, 559);
+            cboArmas.Name = "cboArmas";
+            cboArmas.Size = new Size(121, 23);
+            cboArmas.TabIndex = 9;
             // 
             // cboPocoes
             // 
-            this.cboPocoes.FormattingEnabled = true;
-            this.cboPocoes.Location = new System.Drawing.Point(369, 593);
-            this.cboPocoes.Name = "cboPocoes";
-            this.cboPocoes.Size = new System.Drawing.Size(121, 23);
-            this.cboPocoes.TabIndex = 10;
+            cboPocoes.FormattingEnabled = true;
+            cboPocoes.Location = new Point(369, 593);
+            cboPocoes.Name = "cboPocoes";
+            cboPocoes.Size = new Size(121, 23);
+            cboPocoes.TabIndex = 10;
             // 
             // btnUsarArma
             // 
-            this.btnUsarArma.Location = new System.Drawing.Point(620, 559);
-            this.btnUsarArma.Name = "btnUsarArma";
-            this.btnUsarArma.Size = new System.Drawing.Size(75, 23);
-            this.btnUsarArma.TabIndex = 11;
-            this.btnUsarArma.Text = "Usar";
-            this.btnUsarArma.UseVisualStyleBackColor = true;
+            btnUsarArma.Location = new Point(620, 559);
+            btnUsarArma.Name = "btnUsarArma";
+            btnUsarArma.Size = new Size(75, 23);
+            btnUsarArma.TabIndex = 11;
+            btnUsarArma.Text = "Usar";
+            btnUsarArma.UseVisualStyleBackColor = true;
             btnUsarArma.Click += btnUsarArma_Click;
             // 
             // btnUsarPocao
             // 
-            this.btnUsarPocao.Location = new System.Drawing.Point(620, 593);
-            this.btnUsarPocao.Name = "btnUsarPocao";
-            this.btnUsarPocao.Size = new System.Drawing.Size(75, 23);
-            this.btnUsarPocao.TabIndex = 12;
-            this.btnUsarPocao.Text = "Usar";
-            this.btnUsarPocao.UseVisualStyleBackColor = true;
+            btnUsarPocao.Location = new Point(620, 593);
+            btnUsarPocao.Name = "btnUsarPocao";
+            btnUsarPocao.Size = new Size(75, 23);
+            btnUsarPocao.TabIndex = 12;
+            btnUsarPocao.Text = "Usar";
+            btnUsarPocao.UseVisualStyleBackColor = true;
             btnUsarPocao.Click += btnUsarPocao_Click;
             // 
             // btnNorte
             // 
-            this.btnNorte.Location = new System.Drawing.Point(493, 433);
-            this.btnNorte.Name = "btnNorte";
-            this.btnNorte.Size = new System.Drawing.Size(75, 23);
-            this.btnNorte.TabIndex = 13;
-            this.btnNorte.Text = "Norte";
-            this.btnNorte.UseVisualStyleBackColor = true;
+            btnNorte.Location = new Point(493, 429);
+            btnNorte.Name = "btnNorte";
+            btnNorte.Size = new Size(75, 23);
+            btnNorte.TabIndex = 13;
+            btnNorte.Text = "Norte";
+            btnNorte.UseVisualStyleBackColor = true;
             btnNorte.Click += btnNorte_Click;
             // 
             // btnLeste
             // 
-            this.btnLeste.Location = new System.Drawing.Point(573, 457);
-            this.btnLeste.Name = "btnLeste";
-            this.btnLeste.Size = new System.Drawing.Size(75, 23);
-            this.btnLeste.TabIndex = 14;
-            this.btnLeste.Text = "Leste";
-            this.btnLeste.UseVisualStyleBackColor = true;
+            btnLeste.Location = new Point(573, 457);
+            btnLeste.Name = "btnLeste";
+            btnLeste.Size = new Size(75, 23);
+            btnLeste.TabIndex = 14;
+            btnLeste.Text = "Leste";
+            btnLeste.UseVisualStyleBackColor = true;
             btnLeste.Click += btnLeste_Click;
             // 
             // btnSul
             // 
-            this.btnSul.Location = new System.Drawing.Point(493, 487);
-            this.btnSul.Name = "btnSul";
-            this.btnSul.Size = new System.Drawing.Size(75, 23);
-            this.btnSul.TabIndex = 15;
-            this.btnSul.Text = "Sul";
-            this.btnSul.UseVisualStyleBackColor = true;
+            btnSul.Location = new Point(494, 487);
+            btnSul.Name = "btnSul";
+            btnSul.Size = new Size(75, 23);
+            btnSul.TabIndex = 15;
+            btnSul.Text = "Sul";
+            btnSul.UseVisualStyleBackColor = true;
             btnSul.Click += btnSul_Click;
             // 
             // btnOeste
             // 
-            this.btnOeste.Location = new System.Drawing.Point(412, 457);
-            this.btnOeste.Name = "btnOeste";
-            this.btnOeste.Size = new System.Drawing.Size(75, 23);
-            this.btnOeste.TabIndex = 16;
-            this.btnOeste.Text = "Oeste";
-            this.btnOeste.UseVisualStyleBackColor = true;
+            btnOeste.Location = new Point(412, 457);
+            btnOeste.Name = "btnOeste";
+            btnOeste.Size = new Size(75, 23);
+            btnOeste.TabIndex = 16;
+            btnOeste.Text = "Oeste";
+            btnOeste.UseVisualStyleBackColor = true;
             btnOeste.Click += btnOeste_Click;
             // 
             // rtbLocal
             // 
-            this.rtbLocal.Location = new System.Drawing.Point(347, 19);
-            this.rtbLocal.Name = "rtbLocal";
-            this.rtbLocal.ReadOnly = true;
-            this.rtbLocal.Size = new System.Drawing.Size(360, 105);
-            this.rtbLocal.TabIndex = 17;
-            this.rtbLocal.Text = "";
+            rtbLocal.Location = new Point(347, 19);
+            rtbLocal.Name = "rtbLocal";
+            rtbLocal.ReadOnly = true;
+            rtbLocal.Size = new Size(360, 105);
+            rtbLocal.TabIndex = 17;
+            rtbLocal.Text = "";
             // 
             // rtbMensagens
             // 
-            this.rtbMensagens.Location = new System.Drawing.Point(347, 130);
-            this.rtbMensagens.Name = "rtbMensagens";
-            this.rtbMensagens.ReadOnly = true;
-            this.rtbMensagens.Size = new System.Drawing.Size(360, 286);
-            this.rtbMensagens.TabIndex = 18;
-            this.rtbMensagens.Text = "";
+            rtbMensagens.Location = new Point(347, 130);
+            rtbMensagens.Name = "rtbMensagens";
+            rtbMensagens.ReadOnly = true;
+            rtbMensagens.Size = new Size(360, 286);
+            rtbMensagens.TabIndex = 18;
+            rtbMensagens.Text = "";
             // 
             // dgvInventorio
             // 
-            this.dgvInventorio.AllowUserToAddRows = false;
-            this.dgvInventorio.AllowUserToDeleteRows = false;
-            this.dgvInventorio.AllowUserToResizeRows = false;
-            this.dgvInventorio.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dgvInventorio.EditMode = System.Windows.Forms.DataGridViewEditMode.EditProgrammatically;
-            this.dgvInventorio.Enabled = false;
-            this.dgvInventorio.Location = new System.Drawing.Point(16, 130);
-            this.dgvInventorio.MultiSelect = false;
-            this.dgvInventorio.Name = "dgvInventorio";
-            this.dgvInventorio.ReadOnly = true;
-            this.dgvInventorio.RowHeadersVisible = false;
-            this.dgvInventorio.RowTemplate.Height = 25;
-            this.dgvInventorio.Size = new System.Drawing.Size(312, 309);
-            this.dgvInventorio.TabIndex = 19;
+            dgvInventorio.AllowUserToAddRows = false;
+            dgvInventorio.AllowUserToDeleteRows = false;
+            dgvInventorio.AllowUserToResizeRows = false;
+            dgvInventorio.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            dgvInventorio.EditMode = DataGridViewEditMode.EditProgrammatically;
+            dgvInventorio.Enabled = false;
+            dgvInventorio.Location = new Point(16, 130);
+            dgvInventorio.MultiSelect = false;
+            dgvInventorio.Name = "dgvInventorio";
+            dgvInventorio.ReadOnly = true;
+            dgvInventorio.RowHeadersVisible = false;
+            dgvInventorio.RowTemplate.Height = 25;
+            dgvInventorio.Size = new Size(312, 309);
+            dgvInventorio.TabIndex = 19;
             // 
             // dgvQuests
             // 
-            this.dgvQuests.AllowUserToAddRows = false;
-            this.dgvQuests.AllowUserToDeleteRows = false;
-            this.dgvQuests.AllowUserToResizeRows = false;
-            this.dgvQuests.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dgvQuests.EditMode = System.Windows.Forms.DataGridViewEditMode.EditProgrammatically;
-            this.dgvQuests.Enabled = false;
-            this.dgvQuests.Location = new System.Drawing.Point(16, 446);
-            this.dgvQuests.MultiSelect = false;
-            this.dgvQuests.Name = "dgvQuests";
-            this.dgvQuests.ReadOnly = true;
-            this.dgvQuests.RowHeadersVisible = false;
-            this.dgvQuests.RowTemplate.Height = 25;
-            this.dgvQuests.Size = new System.Drawing.Size(312, 189);
-            this.dgvQuests.TabIndex = 20;
+            dgvQuests.AllowUserToAddRows = false;
+            dgvQuests.AllowUserToDeleteRows = false;
+            dgvQuests.AllowUserToResizeRows = false;
+            dgvQuests.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            dgvQuests.EditMode = DataGridViewEditMode.EditProgrammatically;
+            dgvQuests.Enabled = false;
+            dgvQuests.Location = new Point(16, 446);
+            dgvQuests.MultiSelect = false;
+            dgvQuests.Name = "dgvQuests";
+            dgvQuests.ReadOnly = true;
+            dgvQuests.RowHeadersVisible = false;
+            dgvQuests.RowTemplate.Height = 25;
+            dgvQuests.Size = new Size(312, 189);
+            dgvQuests.TabIndex = 20;
             // 
             // btnMap
             // 
-            this.btnMap.Location = new System.Drawing.Point(493, 458);
-            this.btnMap.Name = "btnMap";
-            this.btnMap.Size = new System.Drawing.Size(75, 23);
-            this.btnMap.TabIndex = 21;
-            this.btnMap.Text = "Mapa";
-            this.btnMap.UseVisualStyleBackColor = true;
-            this.btnMap.Click += new System.EventHandler(this.btnMap_Click);
+            btnMap.Location = new Point(494, 457);
+            btnMap.Name = "btnMap";
+            btnMap.Size = new Size(75, 23);
+            btnMap.TabIndex = 21;
+            btnMap.Text = "Mapa";
+            btnMap.UseVisualStyleBackColor = true;
+            btnMap.Click += btnMap_Click;
             // 
             // SuperAdventure
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(719, 651);
-            this.Controls.Add(this.btnMap);
-            this.Controls.Add(this.dgvQuests);
-            this.Controls.Add(this.dgvInventorio);
-            this.Controls.Add(this.rtbMensagens);
-            this.Controls.Add(this.rtbLocal);
-            this.Controls.Add(this.btnOeste);
-            this.Controls.Add(this.btnSul);
-            this.Controls.Add(this.btnLeste);
-            this.Controls.Add(this.btnNorte);
-            this.Controls.Add(this.btnUsarPocao);
-            this.Controls.Add(this.btnUsarArma);
-            this.Controls.Add(this.cboPocoes);
-            this.Controls.Add(this.cboArmas);
-            this.Controls.Add(this.label5);
-            this.Controls.Add(this.lblLevel);
-            this.Controls.Add(this.lblExperience);
-            this.Controls.Add(this.lblGold);
-            this.Controls.Add(this.lblHitPoints);
-            this.Controls.Add(this.label4);
-            this.Controls.Add(this.label3);
-            this.Controls.Add(this.label2);
-            this.Controls.Add(this.label1);
-            this.Name = "SuperAdventure";
-            this.Text = "My Game";
-            ((System.ComponentModel.ISupportInitialize)(this.dgvInventorio)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.dgvQuests)).EndInit();
-            this.ResumeLayout(false);
-            this.PerformLayout();
-
+            AutoScaleDimensions = new SizeF(7F, 15F);
+            AutoScaleMode = AutoScaleMode.Font;
+            ClientSize = new Size(719, 651);
+            Controls.Add(btnMap);
+            Controls.Add(dgvQuests);
+            Controls.Add(dgvInventorio);
+            Controls.Add(rtbMensagens);
+            Controls.Add(rtbLocal);
+            Controls.Add(btnOeste);
+            Controls.Add(btnSul);
+            Controls.Add(btnLeste);
+            Controls.Add(btnNorte);
+            Controls.Add(btnUsarPocao);
+            Controls.Add(btnUsarArma);
+            Controls.Add(cboPocoes);
+            Controls.Add(cboArmas);
+            Controls.Add(label5);
+            Controls.Add(lblLevel);
+            Controls.Add(lblExperience);
+            Controls.Add(lblGold);
+            Controls.Add(lblHitPoints);
+            Controls.Add(label4);
+            Controls.Add(label3);
+            Controls.Add(label2);
+            Controls.Add(label1);
+            Name = "SuperAdventure";
+            Text = "My Game";
+            ((System.ComponentModel.ISupportInitialize)dgvInventorio).EndInit();
+            ((System.ComponentModel.ISupportInitialize)dgvQuests).EndInit();
+            ResumeLayout(false);
+            PerformLayout();
         }
 
         #endregion

@@ -2,13 +2,13 @@
 {
     public class PlayerQuest
     {
-        public Quest Details { get; set; }
-        public bool IsCompleted { get; set; }
+        public Quest Detalhes { get; set; }
+        public bool Finalizada { get; set; }
 
-        public PlayerQuest(Quest details)
+        public PlayerQuest(Quest detalhes)
         {
-            Details = details;
-            IsCompleted = false;
+            Detalhes = detalhes;
+            Finalizada = false;
         }
     }
 }

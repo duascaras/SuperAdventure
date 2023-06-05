@@ -2,13 +2,13 @@
 {
     public class LivingCreature
     {
-        public int CurrentHitPoints { get; set; }
-        public int MaximumHitPoints { get; set; }
+        public int HpAtual { get; set; }
+        public int HpMaximo { get; set; }
 
-        public LivingCreature(int currentHitPoints, int maximumHitPoints)
+        public LivingCreature(int hpAtual, int hpMaximo)
         {
-            CurrentHitPoints = currentHitPoints;
-            MaximumHitPoints = maximumHitPoints;
+            HpAtual = hpAtual;
+            HpMaximo = hpMaximo;
         }
     }
 }

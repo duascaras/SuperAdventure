@@ -1,14 +1,14 @@
 ﻿namespace Engine
 {
-    public class InventoryItem
+    public class ItemDeInventario
     {
-        public Item Details { get; set; }
-        public int Quantity { get; set; }
+        public Item Detalhes { get; set; }
+        public int Quantidade { get; set; }
 
-        public InventoryItem(Item details, int quantity)
+        public ItemDeInventario(Item detalhes, int quantidade)
         {
-            Details = details;
-            Quantity = quantity;
+            Detalhes = detalhes;
+            Quantidade = quantidade;
         }
     }
 }

@@ -15,6 +15,7 @@
     <None Remove="Imagens\centro.jpg" />
     <None Remove="Imagens\cidade.jpg" />
     <None Remove="Imagens\floresta.jpg" />
+    <None Remove="Imagens\FogLocation.jpg" />
     <None Remove="Imagens\loja.jpg" />
     <None Remove="Imagens\ponte.jpg" />
     <None Remove="Imagens\quintal.jpg" />
@@ -40,6 +41,7 @@
     <EmbeddedResource Include="Imagens\floresta.jpg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </EmbeddedResource>
+    <EmbeddedResource Include="Imagens\FogLocation.jpg" />
     <EmbeddedResource Include="Imagens\loja.jpg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </EmbeddedResource>

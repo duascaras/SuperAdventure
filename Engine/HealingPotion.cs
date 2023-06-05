@@ -1,12 +1,12 @@
 ﻿namespace Engine
 {
-    public class HealingPotion : Item
+    public class PocaoDeVida : Item
     {
-        public int AmountToHeal { get; set; }
+        public int QuantidadeDeHeal { get; set; }
 
-        public HealingPotion(int id, string name, string namePlural, int amountToHeal) : base(id, name, namePlural)
+        public PocaoDeVida(int id, string nome, string namePlural, int quantidadeDeHeal) : base(id, nome, namePlural) //todo -> checar a necessidade de namePlural 
         {
-            AmountToHeal = amountToHeal;
+            QuantidadeDeHeal = quantidadeDeHeal;
         }
     }
 }

@@ -3,20 +3,20 @@
     public class Monster : LivingCreature
     {
         public int ID { get; set; }
-        public string Name { get; set; }
-        public int MaximumDamage { get; set; }
-        public int RewardExperiencePoints { get; set; }
-        public int RewardGold { get; set; }
-        public List<LootItem> LootTable { get; set; }
+        public string Nome { get; set; }
+        public int DanoMaximo { get; set; }
+        public int RecompensaExperiencia { get; set; }
+        public int RecompensaOuro { get; set; }
+        public List<LootItem> Loot { get; set; }
 
-        public Monster(int id, string name, int maximumDamage, int rewardExperiencePoints, int rewardGold, int currentHitPoints, int maximumHitPoints) : base(currentHitPoints, maximumHitPoints)
+        public Monster(int id, string nome, int danoMaximo, int recompensaExperiencia, int recompensaOuro, int hpAtual, int hpMaximo) : base(hpAtual, hpMaximo)
         {
             ID = id;
-            Name = name;
-            MaximumDamage = maximumDamage;
-            RewardExperiencePoints = rewardExperiencePoints;
-            RewardGold = rewardGold;
-            LootTable = new List<LootItem>();
+            Nome = nome;
+            DanoMaximo = danoMaximo;
+            RecompensaExperiencia = recompensaExperiencia;
+            RecompensaOuro = recompensaOuro;
+            Loot = new List<LootItem>();
         }
     }
 }

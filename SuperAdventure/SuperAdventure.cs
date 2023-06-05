@@ -1,5 +1,4 @@
 using Engine;
-using System.Media;
 
 namespace SuperAdventure
 {
@@ -14,125 +13,118 @@ namespace SuperAdventure
 
             _player = new Player(10, 10, 20, 0);
             MoveTo(World.LocationByID(World.LOCATION_ID_CASA));
-            _player.Inventory.Add(new InventoryItem(World.ItemByID(World.ITEM_ID_ESPADA_ENFERRUJADA), 1));
-            _player.Inventory.Add(new InventoryItem(World.ItemByID(World.ITEM_ID_PORRETA), 1));
+            _player.Inventario.Add(new ItemDeInventario(World.ItemByID(World.ITEM_ID_ESPADA_ENFERRUJADA), 1));
+            _player.Inventario.Add(new ItemDeInventario(World.ItemByID(World.ITEM_ID_PORRETA), 1));
 
-            lblHitPoints.Text = _player.CurrentHitPoints.ToString();
-            lblGold.Text = _player.Gold.ToString();
-            lblExperience.Text = _player.ExperiencePoints.ToString();
-            lblLevel.Text = _player.Level.ToString();
-        }
-
-        private void ScrollToBottomOfMessages()
-        {
-            rtbMensagens.SelectionStart = rtbMensagens.Text.Length;
-            rtbMensagens.ScrollToCaret();
+            lblHitPoints.Text = _player.HpAtual.ToString();
+            lblGold.Text = _player.Ouro.ToString();
+            lblExperience.Text = _player.PontosDeExperiencia.ToString();
+            lblLevel.Text = _player.Nivel.ToString();
         }
 
         private void MoveTo(Location newLocation)
         {
-            if (!_player.HasRequiredItemToEnterThisLocation(newLocation))
+            if (!_player.PossuiItemNecessarioParaAcessar(newLocation))
             {
                 rtbMensagens.Text +=
                     "Você preecisa possuir " +
-                    newLocation.ItemRequiredToEnter.Name +
+                    newLocation.ItemNecessarioParaEntrar.Nome +
                     " para acessar esse local." + Environment.NewLine;
 
-                ScrollToBottomOfMessages();
+                RolagemDasMensagens();
                 return;
             }
 
             //atualiza o local do player
-            _player.CurrentLocation = newLocation;
+            _player.LocalAtual = newLocation;
 
             //mostra/esconde os botões de movimento
-            btnNorte.Visible = (newLocation.LocationToNorth != null);
-            btnSul.Visible = (newLocation.LocationToSouth != null);
-            btnLeste.Visible = (newLocation.LocationToEast != null);
-            btnOeste.Visible = (newLocation.LocationToWest != null);
+            btnNorte.Visible = (newLocation.LocalParaCima != null);
+            btnSul.Visible = (newLocation.LocalParaBaixo != null);
+            btnLeste.Visible = (newLocation.LocalParaDireita != null);
+            btnOeste.Visible = (newLocation.LocalParaEsquerda != null);
 
             //exibe o nome do local atual e sua descrição
-            rtbLocal.Text = newLocation.Name + Environment.NewLine;
-            rtbLocal.Text += newLocation.Description + Environment.NewLine;
+            rtbLocal.Text = newLocation.Nome + Environment.NewLine;
+            rtbLocal.Text += newLocation.Descricao + Environment.NewLine;
 
             //cura o player
-            _player.CurrentHitPoints = _player.MaximumHitPoints;
+            _player.HpAtual = _player.HpMaximo;
 
-            //atualiza os HIT POINTS na interface
-            lblHitPoints.Text = _player.CurrentHitPoints.ToString();
+            //atualiza o HP na interface
+            lblHitPoints.Text = _player.HpAtual.ToString();
 
-            if (newLocation.QuestAvailableHere != null)
+            if (newLocation.MissaoDisponivel != null)
             {
-                bool playerTemAQuest = _player.HasThisQuest(newLocation.QuestAvailableHere);
-                bool playerCompletouAQuest = _player.CompletedThisQuest(newLocation.QuestAvailableHere);
+                bool playerTemAQuest = _player.PossuiMissao(newLocation.MissaoDisponivel);
+                bool playerCompletouAQuest = _player.MissaoCompletada(newLocation.MissaoDisponivel);
 
                 if (playerTemAQuest)
                 {
                     if (!playerCompletouAQuest)
                     {
-                        bool playerTemItensParaCompletarQuest = _player.HasAllQuestCompletionItems(newLocation.QuestAvailableHere);
+                        bool playerTemItensParaCompletarQuest = _player.PossuiItensParaCompletarMissao(newLocation.MissaoDisponivel);
 
                         if (playerTemItensParaCompletarQuest)
                         {
                             rtbMensagens.Text += Environment.NewLine;
-                            rtbMensagens.Text += "Você completou a " + newLocation.QuestAvailableHere.Name + " quest." + Environment.NewLine;
+                            rtbMensagens.Text += "Você completou a " + newLocation.MissaoDisponivel.Nome + " missao." + Environment.NewLine;
+                            // TODO -> Checar questão do Som.
                             //SoundPlayer simpleSound = new SoundPlayer(@"c:\Windows\Media\MissionCompleted.wav");
                             //simpleSound.Play();
 
-                            _player.RemoveQuestCompletionItems(newLocation.QuestAvailableHere);
+                            _player.RemoveItensDaMissaoCompletada(newLocation.MissaoDisponivel);
 
                             //Recompensas Quest
                             rtbMensagens.Text += "Você ganhou: " + Environment.NewLine;
-                            rtbMensagens.Text += newLocation.QuestAvailableHere.RewardExperiencePoints.ToString() + " Pontos de Experiência" + Environment.NewLine;
-                            rtbMensagens.Text += newLocation.QuestAvailableHere.RewardGold.ToString() + " Ouro" + Environment.NewLine;
-                            rtbMensagens.Text += newLocation.QuestAvailableHere.RewardItem.Name + Environment.NewLine;
+                            rtbMensagens.Text += newLocation.MissaoDisponivel.RecompensaExperiencia.ToString() + " Pontos de Experiência" + Environment.NewLine;
+                            rtbMensagens.Text += newLocation.MissaoDisponivel.RecompensaOuro.ToString() + " Ouro" + Environment.NewLine;
+                            rtbMensagens.Text += newLocation.MissaoDisponivel.RecompensaItem.Nome + Environment.NewLine;
                             rtbMensagens.Text += Environment.NewLine;
-                            _player.ExperiencePoints += newLocation.QuestAvailableHere.RewardExperiencePoints;
-                            _player.Gold += newLocation.QuestAvailableHere.RewardGold;
 
-                            _player.AddItemToInventory(newLocation.QuestAvailableHere.RewardItem);
+                            _player.PontosDeExperiencia += newLocation.MissaoDisponivel.RecompensaExperiencia;
+                            _player.Ouro += newLocation.MissaoDisponivel.RecompensaOuro;
 
-                            _player.MarkQuestCompleted(newLocation.QuestAvailableHere);
+                            _player.AdicionaItemAoInventario(newLocation.MissaoDisponivel.RecompensaItem);
+                            _player.MarcaMIssaoComoCompleta(newLocation.MissaoDisponivel);
 
-                            lblExperience.Text = _player.ExperiencePoints.ToString();
+                            lblExperience.Text = _player.PontosDeExperiencia.ToString();
                         }
                     }
                 }
-                else  //o player não tem a quest
+                else  //o player não tem a missao
                 {
-                    rtbMensagens.Text += "Você recebeu a " + newLocation.QuestAvailableHere.Name + "quest." + Environment.NewLine;
-                    rtbMensagens.Text += newLocation.QuestAvailableHere.Description + Environment.NewLine;
-                    rtbMensagens.Text += "Para completar ela, retorne com:" + Environment.NewLine;
+                    rtbMensagens.Text += "Você recebeu a missão: " + newLocation.MissaoDisponivel.Nome + Environment.NewLine;
+                    rtbMensagens.Text += newLocation.MissaoDisponivel.Descricao + Environment.NewLine;
+                    rtbMensagens.Text += "Para completar ela, retorne nesse local com:" + Environment.NewLine;
 
-                    foreach (QuestCompletionItem qci in newLocation.QuestAvailableHere.QuestCompletionItems)
+                    foreach (QuestCompletionItem qci in newLocation.MissaoDisponivel.ItensMissaoCompleta)
                     {
-                        if (qci.Quantity == 1)
+                        if (qci.Quantidade == 1)
                         {
-                            rtbMensagens.Text += qci.Quantity.ToString() + " " + qci.Details.Name + Environment.NewLine;
+                            rtbMensagens.Text += qci.Quantidade.ToString() + " " + qci.Detalhes.Nome + Environment.NewLine;
                         }
                         else
                         {
-                            rtbMensagens.Text += qci.Quantity.ToString() + " " + qci.Details.NamePlural + Environment.NewLine;
+                            rtbMensagens.Text += qci.Quantidade.ToString() + " " + qci.Detalhes.NamePlural + Environment.NewLine;
                         }
                     }
                     rtbMensagens.Text += Environment.NewLine;
-
-                    //adiciona a quest pro player
-                    _player.Quests.Add(new PlayerQuest(newLocation.QuestAvailableHere));
+                    //adiciona a missao pro player
+                    _player.Missoes.Add(new PlayerQuest(newLocation.MissaoDisponivel));
                 }
             }
-            //o local tem um monstro?
-            if (newLocation.MonsterLivingHere != null)
+            if (newLocation.MonstroNolocal != null) //o local tem um monstro?
             {
-                rtbMensagens.Text += "Você vê um " + newLocation.MonsterLivingHere.Name + Environment.NewLine;
+                rtbMensagens.Text += "Você vê: " + newLocation.MonstroNolocal.Nome + Environment.NewLine;
 
                 //criando um monstro
-                Monster standardMonster = World.MonsterByID(newLocation.MonsterLivingHere.ID);
-                _currentMonster = new Monster(standardMonster.ID, standardMonster.Name, standardMonster.MaximumDamage, standardMonster.RewardExperiencePoints, standardMonster.RewardGold, standardMonster.CurrentHitPoints, standardMonster.MaximumHitPoints);
+                Monster standardMonster = World.MonsterByID(newLocation.MonstroNolocal.ID);
+                _currentMonster = new Monster(standardMonster.ID, standardMonster.Nome, standardMonster.DanoMaximo, standardMonster.RecompensaExperiencia, standardMonster.RecompensaOuro, standardMonster.HpAtual, standardMonster.HpMaximo);
 
-                foreach (LootItem lootItem in standardMonster.LootTable)
+                foreach (LootItem lootItem in standardMonster.Loot)
                 {
-                    _currentMonster.LootTable.Add(lootItem);
+                    _currentMonster.Loot.Add(lootItem);
                 }
 
                 cboArmas.Visible = true;
@@ -150,19 +142,14 @@ namespace SuperAdventure
                 btnUsarPocao.Visible = false;
             }
 
-            // Refresh player's inventory list
-            UpdateInventoryListInUI();
-            // Refresh player's quest list
-            UpdateQuestListInUI();
-            // Refresh player's weapons combobox
-            UpdateWeaponListInUI();
-            // Refresh player's potions combobox
-            UpdatePotionListInUI();
-
-            ScrollToBottomOfMessages();
+            AtualizaInventario();
+            AtualizaMissoes();
+            AtualizaArmas();
+            AtualizaPocoes();
+            RolagemDasMensagens();
         }
 
-        private void UpdateInventoryListInUI()
+        private void AtualizaInventario()
         {
             dgvInventorio.RowHeadersVisible = false;
             dgvInventorio.ColumnCount = 2;
@@ -170,16 +157,16 @@ namespace SuperAdventure
             dgvInventorio.Columns[0].Width = 197;
             dgvInventorio.Columns[1].Name = "Quantidade";
             dgvInventorio.Rows.Clear();
-            foreach (InventoryItem inventoryItem in _player.Inventory)
+            foreach (ItemDeInventario inventoryItem in _player.Inventario)
             {
-                if (inventoryItem.Quantity > 0)
+                if (inventoryItem.Quantidade > 0)
                 {
-                    dgvInventorio.Rows.Add(new[] { inventoryItem.Details.Name, inventoryItem.Quantity.ToString() });
+                    dgvInventorio.Rows.Add(new[] { inventoryItem.Detalhes.Nome, inventoryItem.Quantidade.ToString() });
                 }
             }
         }
 
-        private void UpdateQuestListInUI()
+        private void AtualizaMissoes()
         {
             dgvQuests.RowHeadersVisible = false;
             dgvQuests.ColumnCount = 2;
@@ -187,64 +174,63 @@ namespace SuperAdventure
             dgvQuests.Columns[0].Width = 197;
             dgvQuests.Columns[1].Name = "Finalizado?";
             dgvQuests.Rows.Clear();
-            foreach (PlayerQuest playerQuest in _player.Quests)
+            foreach (PlayerQuest missaoDoPlayer in _player.Missoes)
             {
-                dgvQuests.Rows.Add(new[] { playerQuest.Details.Name, playerQuest.IsCompleted.ToString() });
+                dgvQuests.Rows.Add(new[] { missaoDoPlayer.Detalhes.Nome, missaoDoPlayer.Finalizada.ToString() });
             }
         }
 
-        private void UpdateWeaponListInUI()
+        private void AtualizaArmas()
         {
             List<Weapon> weapons = new List<Weapon>();
-            foreach (InventoryItem inventoryItem in _player.Inventory)
+            foreach (ItemDeInventario inventoryItem in _player.Inventario)
             {
-                if (inventoryItem.Details is Weapon)
+                if (inventoryItem.Detalhes is Weapon)
                 {
-                    if (inventoryItem.Quantity > 0)
+                    if (inventoryItem.Quantidade > 0)
                     {
-                        weapons.Add((Weapon)inventoryItem.Details);
+                        weapons.Add((Weapon)inventoryItem.Detalhes);
                     }
                 }
             }
             if (weapons.Count == 0)
             {
-                // The player doesn't have any weapons, so hide the weapon combobox and "Use" button
+                //Player sem armas, então escondemos as opções
                 cboArmas.Visible = false;
                 btnUsarArma.Visible = false;
             }
             else
             {
                 cboArmas.DataSource = weapons;
-                cboArmas.DisplayMember = "Name";
+                cboArmas.DisplayMember = "Nome";
                 cboArmas.ValueMember = "ID";
                 cboArmas.SelectedIndex = 0;
             }
         }
 
-        private void UpdatePotionListInUI()
+        private void AtualizaPocoes()
         {
-            List<HealingPotion> healingPotions = new List<HealingPotion>();
-            foreach (InventoryItem inventoryItem in _player.Inventory)
+            List<PocaoDeVida> healingPotions = new List<PocaoDeVida>();
+            foreach (ItemDeInventario inventoryItem in _player.Inventario)
             {
-                if (inventoryItem.Details is HealingPotion)
+                if (inventoryItem.Detalhes is PocaoDeVida)
                 {
-                    if (inventoryItem.Quantity > 0)
+                    if (inventoryItem.Quantidade > 0)
                     {
                         healingPotions.Add(
-                        (HealingPotion)inventoryItem.Details);
+                        (PocaoDeVida)inventoryItem.Detalhes);
                     }
                 }
             }
             if (healingPotions.Count == 0)
             {
-                // The player doesn't have any potions, so hide the potion combobox and "Use" button
                 cboPocoes.Visible = false;
                 btnUsarPocao.Visible = false;
             }
             else
             {
                 cboPocoes.DataSource = healingPotions;
-                cboPocoes.DisplayMember = "Name";
+                cboPocoes.DisplayMember = "Nome";
                 cboPocoes.ValueMember = "ID";
                 cboPocoes.SelectedIndex = 0;
             }
@@ -252,207 +238,170 @@ namespace SuperAdventure
 
         private void btnNorte_Click(object sender, EventArgs e)
         {
-            MoveTo(_player.CurrentLocation.LocationToNorth);
+            MoveTo(_player.LocalAtual.LocalParaCima);
         }
 
         private void btnSul_Click(object sender, EventArgs e)
         {
-            MoveTo(_player.CurrentLocation.LocationToSouth);
+            MoveTo(_player.LocalAtual.LocalParaBaixo);
         }
 
         private void btnLeste_Click(object sender, EventArgs e)
         {
-            MoveTo(_player.CurrentLocation.LocationToEast);
+            MoveTo(_player.LocalAtual.LocalParaDireita);
         }
 
         private void btnOeste_Click(object sender, EventArgs e)
         {
-            MoveTo(_player.CurrentLocation.LocationToWest);
+            MoveTo(_player.LocalAtual.LocalParaEsquerda);
         }
 
         private void btnUsarArma_Click(object sender, EventArgs e)
         {
-            // Get the currently selected weapon from the cboArmas ComboBox
             Weapon currentWeapon = (Weapon)cboArmas.SelectedItem;
-
-            // Determine the amount of damage to do to the monster
-            int damageToMonster = RandomNumberGeneorcr.NumeroEntreValores(
-             currentWeapon.MinimumDamage, currentWeapon.MaximumDamage);
-
-            // Apply the damage to the monster's CurrentHitPoints
-            _currentMonster.CurrentHitPoints -= damageToMonster;
-
-            // Display message
-            rtbMensagens.Text += "Você deu " + _currentMonster.Name + " pontos de " +
+            int damageToMonster = RandomNumberGeneorcr.NumeroEntreValores(currentWeapon.DanoMinimo, currentWeapon.DanoMaximo);
+            _currentMonster.HpAtual -= damageToMonster;
+            rtbMensagens.Text += "Você deu " + _currentMonster.Nome + " pontos de " +
             damageToMonster.ToString() + " dano." + Environment.NewLine;
 
-            // Check if the monster is dead
-            if (_currentMonster.CurrentHitPoints <= 0)
+            if (_currentMonster.HpAtual <= 0) // Monstro morreu
             {
-                // Monster is dead
                 rtbMensagens.Text += Environment.NewLine;
-                rtbMensagens.Text += "Você derrotou o " + _currentMonster.Name +
+                rtbMensagens.Text += "Você derrotou o " + _currentMonster.Nome +
                  Environment.NewLine;
 
-                // Give player experience points for killing the monster
-                _player.ExperiencePoints += _currentMonster.RewardExperiencePoints;
+                // Incrementa o XP
+                _player.PontosDeExperiencia += _currentMonster.RecompensaExperiencia;
                 rtbMensagens.Text += "Você recebeu " +
-                 _currentMonster.RewardExperiencePoints.ToString() +
+                 _currentMonster.RecompensaExperiencia.ToString() +
                  " pontos de experiência" + Environment.NewLine;
+                lblExperience.Text = _player.PontosDeExperiencia.ToString();
 
-                lblExperience.Text = _player.ExperiencePoints.ToString();
+                // Incrementa Ouro
+                _player.Ouro += _currentMonster.RecompensaOuro;
+                rtbMensagens.Text += "Você recebeu " +
+                _currentMonster.RecompensaOuro.ToString() + " moedas de ouro" + Environment.NewLine;
 
-                // Give player gold for killing the monster
-                _player.Gold += _currentMonster.RewardGold;
-                rtbMensagens.Text += "Você recebeu" +
-                _currentMonster.RewardGold.ToString() + " moedas de ouro" + Environment.NewLine;
+                // Loot do monstro
+                List<ItemDeInventario> lootedItems = new List<ItemDeInventario>();
 
-                // Get random loot items from the monster
-                List<InventoryItem> lootedItems = new List<InventoryItem>();
-
-                // Add items to the lootedItems list, comparing a random number to the drop percentage
-                foreach (LootItem lootItem in _currentMonster.LootTable)
+                // Adiciona itens ao inventário, usando a porcentagem do drop
+                foreach (LootItem lootItem in _currentMonster.Loot)
                 {
-                    if (RandomNumberGeneorcr.NumeroEntreValores(1, 100) <= lootItem.DropPercentage)
+                    if (RandomNumberGeneorcr.NumeroEntreValores(1, 100) <= lootItem.PorcentagemDrop)
                     {
-                        lootedItems.Add(new InventoryItem(lootItem.Details, 1));
+                        lootedItems.Add(new ItemDeInventario(lootItem.Detalhes, 1));
                     }
                 }
-                // If no items were randomly selected, then add the default loot item(s).
+
+                // Dropa o padrão, caso nenhum de cima tenha retornado.s
                 if (lootedItems.Count == 0)
                 {
-                    foreach (LootItem lootItem in _currentMonster.LootTable)
+                    foreach (LootItem lootItem in _currentMonster.Loot)
                     {
-                        if (lootItem.IsDefaultItem)
+                        if (lootItem.ItemPadrao)
                         {
-                            lootedItems.Add(new InventoryItem(lootItem.Details, 1));
+                            lootedItems.Add(new ItemDeInventario(lootItem.Detalhes, 1));
                         }
                     }
                 }
 
-                // Add the looted items to the player's inventory
-                foreach (InventoryItem inventoryItem in lootedItems)
+                // Adiciona o item looteado ao inventário
+                foreach (ItemDeInventario inventoryItem in lootedItems)
                 {
-                    _player.AddItemToInventory(inventoryItem.Details);
+                    _player.AdicionaItemAoInventario(inventoryItem.Detalhes);
 
-                    if (inventoryItem.Quantity == 1)
+                    if (inventoryItem.Quantidade == 1)
                     {
                         rtbMensagens.Text += "Você recebeu " +
-                         inventoryItem.Quantity.ToString() + " " +
-                         inventoryItem.Details.Name + Environment.NewLine;
+                         inventoryItem.Quantidade.ToString() + " " +
+                         inventoryItem.Detalhes.Nome + Environment.NewLine;
                     }
                     else
                     {
                         rtbMensagens.Text += "Você recebeu " +
-                       inventoryItem.Quantity.ToString() + " " +
-                       inventoryItem.Details.NamePlural + Environment.NewLine;
+                       inventoryItem.Quantidade.ToString() + " " +
+                       inventoryItem.Detalhes.NamePlural + Environment.NewLine;
                     }
                 }
 
-                // Refresh player information and inventory controls
-                lblHitPoints.Text = _player.CurrentHitPoints.ToString();
-                lblGold.Text = _player.Gold.ToString();
-                lblExperience.Text = _player.ExperiencePoints.ToString();
-                lblLevel.Text = _player.Level.ToString();
+                // Atualiza as informações do player
+                lblHitPoints.Text = _player.HpAtual.ToString();
+                lblGold.Text = _player.Ouro.ToString();
+                lblExperience.Text = _player.PontosDeExperiencia.ToString();
+                lblLevel.Text = _player.Nivel.ToString();
 
-                UpdateInventoryListInUI();
-                UpdateWeaponListInUI();
-                UpdatePotionListInUI();
+                AtualizaInventario();
+                AtualizaArmas();
+                AtualizaPocoes();
 
-                // Add a blank line to the messages box, just for appearance.
                 rtbMensagens.Text += Environment.NewLine;
 
-                // Move player to current location (to heal player and create a new monster to fight)
-                MoveTo(_player.CurrentLocation);
+                // Reseta o local (HP pra full e monstro respawna
+                MoveTo(_player.LocalAtual);
             }
-            else
+            else //monstro não morreu
             {
-                // Monster is still alive
+                int damageToPlayer = RandomNumberGeneorcr.NumeroEntreValores(0, _currentMonster.DanoMaximo);
+                rtbMensagens.Text += "O " + _currentMonster.Nome + " deu " + damageToPlayer.ToString() + " pontos de dano." + Environment.NewLine;
+                _player.HpAtual -= damageToPlayer;
+                lblHitPoints.Text = _player.HpAtual.ToString();
 
-                // Determine the amount of damage the monster does to the player
-                int damageToPlayer =
-                RandomNumberGeneorcr.NumeroEntreValores(0, _currentMonster.MaximumDamage);
-
-                // Display message
-                rtbMensagens.Text += "O " + _currentMonster.Name + " deu " +
-                damageToPlayer.ToString() + " pontos de dano." + Environment.NewLine;
-
-                // Subtract damage from player
-                _player.CurrentHitPoints -= damageToPlayer;
-
-                // Refresh player data in UI
-                lblHitPoints.Text = _player.CurrentHitPoints.ToString();
-
-                if (_player.CurrentHitPoints <= 0)
+                if (_player.HpAtual <= 0)
                 {
-                    // Display message
-                    //rtbMensagens.Text += "The " + _currentMonster.Name + " killed you." +
-                    rtbMensagens.Text += "Você morreu " +
+                    rtbMensagens.Text += "Você morreu." +
                     Environment.NewLine;
-
-                    // Move player to "Home"
+                    // Respawna player na casa.
                     MoveTo(World.LocationByID(World.LOCATION_ID_CASA));
                 }
             }
-            ScrollToBottomOfMessages();
+            RolagemDasMensagens();
         }
 
         private void btnUsarPocao_Click(object sender, EventArgs e)
         {
-            // Get the currently selected potion from the combobox
-            HealingPotion potion = (HealingPotion)cboPocoes.SelectedItem;
+            PocaoDeVida potion = (PocaoDeVida)cboPocoes.SelectedItem;
+            _player.HpAtual = (_player.HpAtual + potion.QuantidadeDeHeal);
 
-            // Add healing amount to the player's current hit points
-            _player.CurrentHitPoints = (_player.CurrentHitPoints + potion.AmountToHeal);
-
-            // CurrentHitPoints cannot exceed player's MaximumHitPoints
-            if (_player.CurrentHitPoints > _player.MaximumHitPoints)
+            if (_player.HpAtual > _player.HpMaximo)
             {
-                _player.CurrentHitPoints = _player.MaximumHitPoints;
+                _player.HpAtual = _player.HpMaximo;
             }
 
-            // Remove the potion from the player's inventory
-            foreach (InventoryItem ii in _player.Inventory)
+            foreach (ItemDeInventario ii in _player.Inventario)
             {
-                if (ii.Details.ID == potion.ID)
+                if (ii.Detalhes.ID == potion.ID)
                 {
-                    ii.Quantity--;
+                    ii.Quantidade--;
                     break;
                 }
             }
 
-            // Display message
-            rtbMensagens.Text += "Você bebeu a " + potion.Name + Environment.NewLine;
+            rtbMensagens.Text += "Você usou: " + potion.Nome + Environment.NewLine;
 
-            // Monster gets their turn to attack
-
-            // Determine the amount of damage the monster does to the player
-            int damageToPlayer =
-            RandomNumberGeneorcr.NumeroEntreValores(0, _currentMonster.MaximumDamage);
-
-            // Display message
-            rtbMensagens.Text += "O " + _currentMonster.Name + " deu " +
+            // Após usar a poção, o turno é do monstro.
+            int damageToPlayer = RandomNumberGeneorcr.NumeroEntreValores(0, _currentMonster.DanoMaximo);
+            rtbMensagens.Text += "Você recebeu: " + _currentMonster.Nome +
             damageToPlayer.ToString() + " pontos de dano." + Environment.NewLine;
+            _player.HpAtual -= damageToPlayer;
 
-            // Subtract damage from player
-            _player.CurrentHitPoints -= damageToPlayer;
-
-            if (_player.CurrentHitPoints <= 0)
+            if (_player.HpAtual <= 0)
             {
-                // Display message
-                //rtbMensagens.Text += "The " + _currentMonster.Name + " killed you." +
                 rtbMensagens.Text += "Você morreu." +
                 Environment.NewLine;
-
-                // Move player to "Home"
-                MoveTo(World.LocationByID(World.LOCATION_ID_CASA));
+                MoveTo(World.LocationByID(World.LOCATION_ID_CASA)); //respawna player na casa.
             }
 
-            // Refresh player data in UI
-            lblHitPoints.Text = _player.CurrentHitPoints.ToString();
-            UpdateInventoryListInUI();
-            UpdatePotionListInUI();
-            ScrollToBottomOfMessages();
+            lblHitPoints.Text = _player.HpAtual.ToString();
+            AtualizaInventario();
+            AtualizaPocoes();
+            RolagemDasMensagens();
+        }
+
+        private void RolagemDasMensagens()
+        {
+            rtbMensagens.SelectionStart = rtbMensagens.Text.Length;
+            rtbMensagens.ScrollToCaret();
         }
 
         private void btnMap_Click(object sender, EventArgs e)

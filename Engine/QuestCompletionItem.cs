@@ -2,13 +2,13 @@
 {
     public class QuestCompletionItem
     {
-        public Item Details { get; set; }
-        public int Quantity { get; set; }
+        public Item Detalhes { get; set; }
+        public int Quantidade { get; set; }
 
-        public QuestCompletionItem(Item details, int quantity)
+        public QuestCompletionItem(Item detalhes, int quantidade)
         {
-            Details = details;
-            Quantity = quantity;
+            Detalhes = detalhes;
+            Quantidade = quantidade;
         }
     }
 }

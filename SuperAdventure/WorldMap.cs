@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Engine;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -32,9 +33,7 @@ namespace SuperAdventure
 
         private void SetImage(PictureBox pictureBox, string imageName)
         {
-            using (Stream resourceStream =
-                _thisAssembly.GetManifestResourceStream
-                (_thisAssembly.GetName().Name + ".Imagens." + imageName + ".jpg"))
+            using (Stream? resourceStream = _thisAssembly.GetManifestResourceStream(_thisAssembly.GetName().Name + ".Imagens." + imageName + ".jpg"))
             {
                 if (resourceStream != null)
                 {

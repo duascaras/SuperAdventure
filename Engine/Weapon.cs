@@ -2,13 +2,13 @@
 {
     public class Weapon : Item
     {
-        public int MinimumDamage { get; set; }
-        public int MaximumDamage { get; set; }
+        public int DanoMinimo { get; set; }
+        public int DanoMaximo { get; set; }
 
-        public Weapon(int id, string name, string namePlural, int minimumDamage, int maximumDamage) : base(id, name, namePlural)
+        public Weapon(int id, string nome, string namePlural, int danoMinimo, int danoMaximo) : base(id, nome, namePlural)
         {
-            MinimumDamage = minimumDamage;
-            MaximumDamage = maximumDamage;
+            DanoMinimo = danoMinimo;
+            DanoMaximo = danoMaximo;
         }
     }
 }

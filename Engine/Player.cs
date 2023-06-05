@@ -2,49 +2,35 @@
 {
     public class Player : LivingCreature
     {
-        public int Gold { get; set; }
-        public int ExperiencePoints { get; set; }
-        public int Level
+        public int Ouro { get; set; }
+        public int PontosDeExperiencia { get; set; }
+        public int Nivel
         {
-            get { return ((ExperiencePoints / 100) + 1); }
+            get { return ((PontosDeExperiencia / 100) + 1); }
         }
-        public List<InventoryItem> Inventory { get; set; }
-        public List<PlayerQuest> Quests { get; set; }
-        public Location CurrentLocation { get; set; }
+        public List<ItemDeInventario> Inventario { get; set; }
+        public List<PlayerQuest> Missoes { get; set; }
+        public Location LocalAtual { get; set; }
 
-        public Player(int currentHitPoints, int maximumHitPoints, int gold, int experiencePoints) : base(currentHitPoints, maximumHitPoints)
+        public Player(int hpAtual, int hpMaximo, int ouro, int pontosDeExperiencia) : base(hpAtual, hpMaximo)
         {
-            Gold = gold;
-            ExperiencePoints = experiencePoints;
-            Inventory = new List<InventoryItem>();
-            Quests = new List<PlayerQuest>();
+            Ouro = ouro;
+            PontosDeExperiencia = pontosDeExperiencia;
+            Inventario = new List<ItemDeInventario>();
+            Missoes = new List<PlayerQuest>();
         }
 
-        public bool HasRequiredItemToEnterThisLocation(Location location)
+        public bool PossuiItemNecessarioParaAcessar(Location local)
         {
-            if (location.ItemRequiredToEnter == null)
+            if (local.ItemNecessarioParaEntrar == null)
             {
-                // There is no required item for this location, so return "true"
+                // Não precisa de item para entrar no local.
                 return true;
             }
-            // See if the player has the required item in their inventory
-            foreach (InventoryItem ii in Inventory)
+            // Caso tenha, verifica se o player tem o item no inventário.
+            foreach (ItemDeInventario ii in Inventario)
             {
-                if (ii.Details.ID == location.ItemRequiredToEnter.ID)
-                {
-                    // We found the required item, so return "true"
-                    return true;
-                }
-            }
-            // We didn't find the required item in their inventory, so return "false"
-            return false;
-        }
-
-        public bool HasThisQuest(Quest quest)
-        {
-            foreach (PlayerQuest playerQuest in Quests)
-            {
-                if (playerQuest.Details.ID == quest.ID)
+                if (ii.Detalhes.ID == local.ItemNecessarioParaEntrar.ID)
                 {
                     return true;
                 }
@@ -52,90 +38,95 @@
             return false;
         }
 
-        public bool CompletedThisQuest(Quest quest)
+        public bool PossuiMissao(Quest missao)
         {
-            foreach (PlayerQuest playerQuest in Quests)
+            foreach (PlayerQuest missaoDoPlayer in Missoes)
             {
-                if (playerQuest.Details.ID == quest.ID)
+                if (missaoDoPlayer.Detalhes.ID == missao.ID)
                 {
-                    return playerQuest.IsCompleted;
+                    return true;
                 }
             }
             return false;
         }
 
-        public bool HasAllQuestCompletionItems(Quest quest)
+        public bool MissaoCompletada(Quest missao)
         {
-            // See if the player has all the items needed to complete the quest here
-            foreach (QuestCompletionItem qci in quest.QuestCompletionItems)
+            foreach (PlayerQuest missaoDoPlayer in Missoes)
+            {
+                if (missaoDoPlayer.Detalhes.ID == missao.ID)
+                {
+                    return missaoDoPlayer.Finalizada;
+                }
+            }
+            return false;
+        }
+
+        public bool PossuiItensParaCompletarMissao(Quest missao)
+        {
+            foreach (QuestCompletionItem qci in missao.ItensMissaoCompleta)
             {
                 bool foundItemInPlayersInventory = false;
-                // Check each item in the player's inventory, to see if they have it, and enough of it
-                foreach (InventoryItem ii in Inventory)
+
+                foreach (ItemDeInventario ii in Inventario)
                 {
-                    // The player has the item in their inventory
-                    if (ii.Details.ID == qci.Details.ID)
+                    // Ele possuí o item da missão
+                    if (ii.Detalhes.ID == qci.Detalhes.ID)
                     {
                         foundItemInPlayersInventory = true;
-                        // The player does not have enough of this item to complete the quest
-                        if (ii.Quantity < qci.Quantity)
+                        // Verifica se ele tem a quantidade necessária para concluir a missão.
+                        if (ii.Quantidade < qci.Quantidade)
                         {
                             return false;
                         }
                     }
                 }
-                // The player does not have any of this questcompletion item in their inventory
                 if (!foundItemInPlayersInventory)
                 {
                     return false;
                 }
             }
-            // If we got here, then the player must have all the required items, and enough of them, to complete the quest.
+            // Se bateu aqui, ele tem todos os itens e suas quantidades.
             return true;
         }
 
-        public void RemoveQuestCompletionItems(Quest quest)
+        public void RemoveItensDaMissaoCompletada(Quest missao) // como se o player estivesse devolvendo o item que ele foi buscar na missão
         {
-            foreach (QuestCompletionItem qci in quest.QuestCompletionItems)
+            foreach (QuestCompletionItem qci in missao.ItensMissaoCompleta)
             {
-                foreach (InventoryItem ii in Inventory)
+                foreach (ItemDeInventario ii in Inventario)
                 {
-                    if (ii.Details.ID == qci.Details.ID)
+                    if (ii.Detalhes.ID == qci.Detalhes.ID)
                     {
-                        // Subtract the quantity from the player's inventory that was needed to complete the quest
-                        ii.Quantity -= qci.Quantity;
+                        ii.Quantidade -= qci.Quantidade;
                         break;
                     }
                 }
             }
         }
 
-        public void AddItemToInventory(Item itemToAdd)
+        public void AdicionaItemAoInventario(Item itemParaSerAdicionado)
         {
-            foreach (InventoryItem ii in Inventory)
+            foreach (ItemDeInventario ii in Inventario)
             {
-                if (ii.Details.ID == itemToAdd.ID)
+                if (ii.Detalhes.ID == itemParaSerAdicionado.ID)
                 {
-                    // They have the item in their inventory, so increase the quantity by one
-                    ii.Quantity++;
-                    return; // We added the item, and are done, so get out of this function
+                    //Caso ele tenha o item no inventário, apenas incrementamos.
+                    ii.Quantidade++;
+                    return;
                 }
             }
-            // They didn't have the item, so add it to their inventory, with a quantity of 1
-            Inventory.Add(new InventoryItem(itemToAdd, 1));
+            //Caso não tenha, adicionamos 1.
+            Inventario.Add(new ItemDeInventario(itemParaSerAdicionado, 1));
         }
 
-        public void MarkQuestCompleted(Quest quest)
+        public void MarcaMIssaoComoCompleta(Quest missao)
         {
-            // Find the quest in the player's quest list
-            foreach (PlayerQuest pq in Quests)
+            foreach (PlayerQuest pq in Missoes)
             {
-                if (pq.Details.ID == quest.ID)
+                if (pq.Detalhes.ID == missao.ID)
                 {
-                    // Mark it as completed
-                    pq.IsCompleted = true;
-
-                    // We found the quest, and marked it complete, so get out of this function
+                    pq.Finalizada = true;
                     return;
                 }
             }
