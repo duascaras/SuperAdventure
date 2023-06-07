@@ -3,12 +3,12 @@ using System.Numerics;
 
 namespace SuperAdventure
 {
-    public partial class SuperAdventure : Form
+    public partial class EspiritosDoMal : Form
     {
         private Player _player;
         private Monstro _currentMonster;
 
-        public SuperAdventure()
+        public EspiritosDoMal()
         {
             InitializeComponent();
 

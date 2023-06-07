@@ -1,6 +1,6 @@
 ﻿namespace SuperAdventure
 {
-    partial class SuperAdventure
+    partial class EspiritosDoMal
     {
         /// <summary>
         ///  Required designer variable.
@@ -59,16 +59,16 @@
             label1.AutoSize = true;
             label1.Location = new Point(18, 20);
             label1.Name = "label1";
-            label1.Size = new Size(62, 15);
+            label1.Size = new Size(26, 15);
             label1.TabIndex = 0;
-            label1.Text = "Hit Points:";
+            label1.Text = "HP:";
             // 
             // label2
             // 
             label2.AutoSize = true;
             label2.Location = new Point(18, 46);
             label2.Name = "label2";
-            label2.Size = new Size(35, 15);
+            label2.Size = new Size(37, 15);
             label2.TabIndex = 1;
             label2.Text = "Ouro:";
             // 
@@ -77,9 +77,9 @@
             label3.AutoSize = true;
             label3.Location = new Point(18, 74);
             label3.Name = "label3";
-            label3.Size = new Size(67, 15);
+            label3.Size = new Size(70, 15);
             label3.TabIndex = 2;
-            label3.Text = "Experience:";
+            label3.Text = "Experiência:";
             // 
             // label4
             // 
@@ -88,7 +88,7 @@
             label4.Name = "label4";
             label4.Size = new Size(37, 15);
             label4.TabIndex = 3;
-            label4.Text = "Nivel:";
+            label4.Text = "Nível:";
             // 
             // lblHitPoints
             // 
@@ -269,7 +269,7 @@
             btnMap.UseVisualStyleBackColor = true;
             btnMap.Click += btnMap_Click;
             // 
-            // SuperAdventure
+            // EspiritosDoMal
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
@@ -296,8 +296,8 @@
             Controls.Add(label3);
             Controls.Add(label2);
             Controls.Add(label1);
-            Name = "SuperAdventure";
-            Text = "My Game";
+            Name = "EspiritosDoMal";
+            Text = "Espíritos do Mal";
             ((System.ComponentModel.ISupportInitialize)dgvInventorio).EndInit();
             ((System.ComponentModel.ISupportInitialize)dgvQuests).EndInit();
             ResumeLayout(false);

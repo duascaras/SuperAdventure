@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.5.33530.505
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SuperAdventure", "SuperAdventure\SuperAdventure.csproj", "{0BFF14F5-9AFF-43BB-A263-3C2A29F63507}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EspiritosDoMal", "SuperAdventure\EspiritosDoMal.csproj", "{0BFF14F5-9AFF-43BB-A263-3C2A29F63507}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Engine", "Engine\Engine.csproj", "{66F0800D-B2BB-4EA0-AF90-6515193B5A60}"
 EndProject

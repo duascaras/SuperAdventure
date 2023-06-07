@@ -27,7 +27,7 @@
 
         public const int MONSTER_ID_ORC = 1;
         public const int MONSTER_ID_MORTO_VIVO = 2;
-        public const int MONSTER_ID_MUNRAH = 3;
+        public const int MONSTER_ID_MUMM_RA = 3;
         public const int MONSTER_ID_GAIL = 4;
 
         public const int QUEST_ID_LUTA_GAIL = 1;
@@ -56,15 +56,13 @@
         private static void PreencherItens()
         {
             Itens.Add(new Arma(ITEM_ID_ESPADA_ENFERRUJADA, "Espada Enferrujada", "Espada Enferrujadas", 0, 5));
-            Itens.Add(new Arma(ITEM_ID_PORRETA, "Porreta", "Porreta", 3, 10));
-            Itens.Add(new Arma(ITEM_ID_ESPADA_DE_GAIL, "Espada do Gail", "Espada do Gail", 1, 9));
-
+            Itens.Add(new Arma(ITEM_ID_PORRETA, "Porreta", "Porreta", 1, 8));
+            Itens.Add(new Arma(ITEM_ID_ESPADA_DE_GAIL, "Espada do Gail", "Espada do Gail", 3, 15));
             Itens.Add(new PocaoDeVida(ITEM_ID_POCAO_DE_CURA, "Poção de Cura", "Poção de Cura", 5));
-
             Itens.Add(new Item(ITEM_ID_CHAVE, "Chave", "Chave"));
             Itens.Add(new Item(ITEM_ID_OLHO_DE_ORC, "Olho de Orc", "Olho de Orc"));
             Itens.Add(new Item(ITEM_ID_PEDACO_CARNE_PODRE, "Pedaço de Carne Podre", "Pedaço de Carne Podre"));
-            Itens.Add(new Item(ITEM_ID_CABECA, "Cabeça de Munrah", "Cabeça de Munrah"));
+            Itens.Add(new Item(ITEM_ID_CABECA, "Cabeça de Mumm-Ra", "Cabeça do Mumm-Ra"));
             Itens.Add(new Item(ITEM_ID_MOEDA, "Moeda", "Moeda"));
             Itens.Add(new Item(ITEM_ID_MEDALHA_DE_VENCEDOR, "Moeda de Vencedor", "Moeda de Vencedor"));
         }
@@ -77,15 +75,15 @@
             Monstro mortoVivo = new Monstro(MONSTER_ID_MORTO_VIVO, "Morto-Vivo", 5, 3, 10, 5, 5);
             mortoVivo.Loot.Add(new ItemDeLoot(ItemByID(ITEM_ID_PEDACO_CARNE_PODRE), 75, false));
 
-            Monstro munrah = new Monstro(MONSTER_ID_MUNRAH, "Munrah", 10, 5, 40, 10, 10);
-            munrah.Loot.Add(new ItemDeLoot(ItemByID(ITEM_ID_CABECA), 75, true));
-
             Monstro gail = new Monstro(MONSTER_ID_GAIL, "Lorthus Gail", 7, 3, 0, 4, 4);
             gail.Loot.Add(new ItemDeLoot(ItemByID(ITEM_ID_MOEDA), 0, true));
 
+            Monstro mummra = new Monstro(MONSTER_ID_MUMM_RA, "Mumm-Ra", 15, 7, 40, 10, 10);
+            mummra.Loot.Add(new ItemDeLoot(ItemByID(ITEM_ID_CABECA), 75, true));
+
             Monstros.Add(orc);
             Monstros.Add(mortoVivo);
-            Monstros.Add(munrah);
+            Monstros.Add(mummra);
             Monstros.Add(gail);
         }
 
@@ -107,15 +105,15 @@
 
             matarOrc.RecompensaItem = ItemByID(ITEM_ID_CHAVE);
 
-            Quest matarMunrah = new Quest(QUEST_ID_LUTA_FINAL,
+            Quest matarMummra = new Quest(QUEST_ID_LUTA_FINAL,
                 "Mate o Dragão da Torre",
                 "Existe um dragão que vive na antiga torre da cidade abandonada. Alguem precisa mata-lo.", 30, 30);
 
-            matarMunrah.ItensMissaoCompleta.Add(new ItemQuestCompleta(ItemByID(ITEM_ID_CABECA), 1));
+            matarMummra.ItensMissaoCompleta.Add(new ItemQuestCompleta(ItemByID(ITEM_ID_CABECA), 1));
 
-            matarMunrah.RecompensaItem = ItemByID(ITEM_ID_MEDALHA_DE_VENCEDOR);
+            matarMummra.RecompensaItem = ItemByID(ITEM_ID_MEDALHA_DE_VENCEDOR);
 
-            Missoes.Add(matarMunrah);
+            Missoes.Add(matarMummra);
             Missoes.Add(lutarComGail);
             Missoes.Add(matarOrc);
         }
@@ -170,7 +168,7 @@
             Local torreDoDragao = new Local(LOCATION_ID_TORRE_DO_DRAGAO,
                 "Uma torre alta.",
                 "Você vê restos do que já foi uma igreja..." + Environment.NewLine + "O som parece perturbador.");
-            torreDoDragao.MonstroNolocal = MonsterByID(MONSTER_ID_MUNRAH);
+            torreDoDragao.MonstroNolocal = MonsterByID(MONSTER_ID_MUMM_RA);
 
             //Linkagem dos locais
             casa.LocalParaCima = floresta;
