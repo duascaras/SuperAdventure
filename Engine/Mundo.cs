@@ -1,6 +1,6 @@
 ﻿namespace Engine
 {
-    public static class World
+    public static class Mundo
     {
         //Pagina 51
         /* O propósito da classe World é termos uma classe que possui tudo 
@@ -9,9 +9,9 @@
          * E também conecta os lugartes uns aos outros. */
 
         public static readonly List<Item> Itens = new List<Item>();
-        public static readonly List<Monster> Monstros = new List<Monster>();
+        public static readonly List<Monstro> Monstros = new List<Monstro>();
         public static readonly List<Quest> Missoes = new List<Quest>();
-        public static readonly List<Location> Locais = new List<Location>();
+        public static readonly List<Local> Locais = new List<Local>();
 
         public const int ITEM_ID_ESPADA_ENFERRUJADA = 1;
         public const int ITEM_ID_CHAVE = 2;
@@ -45,7 +45,7 @@
         public const int LOCATION_ID_TORRE_DO_DRAGAO = 9;
         public const int LOCATION_ID_QUINTAL = 10;
 
-        static World()
+        static Mundo()
         {
             PreencherItens();
             PreencherMonstros();
@@ -55,9 +55,9 @@
 
         private static void PreencherItens()
         {
-            Itens.Add(new Weapon(ITEM_ID_ESPADA_ENFERRUJADA, "Espada Enferrujada", "Espada Enferrujadas", 0, 5));
-            Itens.Add(new Weapon(ITEM_ID_PORRETA, "Porreta", "Porreta", 3, 10));
-            Itens.Add(new Weapon(ITEM_ID_ESPADA_DE_GAIL, "Espada do Gail", "Espada do Gail", 1, 9));
+            Itens.Add(new Arma(ITEM_ID_ESPADA_ENFERRUJADA, "Espada Enferrujada", "Espada Enferrujadas", 0, 5));
+            Itens.Add(new Arma(ITEM_ID_PORRETA, "Porreta", "Porreta", 3, 10));
+            Itens.Add(new Arma(ITEM_ID_ESPADA_DE_GAIL, "Espada do Gail", "Espada do Gail", 1, 9));
 
             Itens.Add(new PocaoDeVida(ITEM_ID_POCAO_DE_CURA, "Poção de Cura", "Poção de Cura", 5));
 
@@ -71,17 +71,17 @@
 
         private static void PreencherMonstros()
         {
-            Monster orc = new Monster(MONSTER_ID_ORC, "Orc", 5, 3, 10, 4, 4);
-            orc.Loot.Add(new LootItem(ItemByID(ITEM_ID_OLHO_DE_ORC), 75, true));
+            Monstro orc = new Monstro(MONSTER_ID_ORC, "Orc", 5, 3, 10, 4, 4);
+            orc.Loot.Add(new ItemDeLoot(ItemByID(ITEM_ID_OLHO_DE_ORC), 75, true));
 
-            Monster mortoVivo = new Monster(MONSTER_ID_MORTO_VIVO, "Morto-Vivo", 5, 3, 10, 5, 5);
-            mortoVivo.Loot.Add(new LootItem(ItemByID(ITEM_ID_PEDACO_CARNE_PODRE), 75, false));
+            Monstro mortoVivo = new Monstro(MONSTER_ID_MORTO_VIVO, "Morto-Vivo", 5, 3, 10, 5, 5);
+            mortoVivo.Loot.Add(new ItemDeLoot(ItemByID(ITEM_ID_PEDACO_CARNE_PODRE), 75, false));
 
-            Monster munrah = new Monster(MONSTER_ID_MUNRAH, "Munrah", 10, 5, 40, 10, 10);
-            munrah.Loot.Add(new LootItem(ItemByID(ITEM_ID_CABECA), 75, true));
+            Monstro munrah = new Monstro(MONSTER_ID_MUNRAH, "Munrah", 10, 5, 40, 10, 10);
+            munrah.Loot.Add(new ItemDeLoot(ItemByID(ITEM_ID_CABECA), 75, true));
 
-            Monster gail = new Monster(MONSTER_ID_GAIL, "Lorthus Gail", 7, 3, 0, 4, 4);
-            gail.Loot.Add(new LootItem(ItemByID(ITEM_ID_MOEDA), 0, true));
+            Monstro gail = new Monstro(MONSTER_ID_GAIL, "Lorthus Gail", 7, 3, 0, 4, 4);
+            gail.Loot.Add(new ItemDeLoot(ItemByID(ITEM_ID_MOEDA), 0, true));
 
             Monstros.Add(orc);
             Monstros.Add(mortoVivo);
@@ -95,7 +95,7 @@
                     "Lute com o Gail",
                     "Lute e ganhe de Lorthus Gail. Você receberá uma Poção de Cura e uma espada.", 20, 0);
 
-            lutarComGail.ItensMissaoCompleta.Add(new QuestCompletionItem(ItemByID(ITEM_ID_MOEDA), 1));
+            lutarComGail.ItensMissaoCompleta.Add(new ItemQuestCompleta(ItemByID(ITEM_ID_MOEDA), 1));
 
             lutarComGail.RecompensaItem = ItemByID(ITEM_ID_ESPADA_DE_GAIL);
 
@@ -103,7 +103,7 @@
                     "Mate o Orc da Caverna",
                     "Mate o Orc da Caverna e traga de volta 3 olhos de Orc. Você receberá uma Chave e 20 peças de ouro", 20, 20);
 
-            matarOrc.ItensMissaoCompleta.Add(new QuestCompletionItem(ItemByID(ITEM_ID_OLHO_DE_ORC), 3));
+            matarOrc.ItensMissaoCompleta.Add(new ItemQuestCompleta(ItemByID(ITEM_ID_OLHO_DE_ORC), 3));
 
             matarOrc.RecompensaItem = ItemByID(ITEM_ID_CHAVE);
 
@@ -111,7 +111,7 @@
                 "Mate o Dragão da Torre",
                 "Existe um dragão que vive na antiga torre da cidade abandonada. Alguem precisa mata-lo.", 30, 30);
 
-            matarMunrah.ItensMissaoCompleta.Add(new QuestCompletionItem(ItemByID(ITEM_ID_CABECA), 1));
+            matarMunrah.ItensMissaoCompleta.Add(new ItemQuestCompleta(ItemByID(ITEM_ID_CABECA), 1));
 
             matarMunrah.RecompensaItem = ItemByID(ITEM_ID_MEDALHA_DE_VENCEDOR);
 
@@ -122,35 +122,35 @@
 
         private static void PreencherLocais()
         {
-            Location casa = new Location(LOCATION_ID_CASA,
+            Local casa = new Local(LOCATION_ID_CASA,
                 "Casa",
                 "Parece tão calmo aqui.");
 
-            Location floresta = new Location(LOCATION_ID_FLORESTA,
+            Local floresta = new Local(LOCATION_ID_FLORESTA,
                 "Floresta",
                 "As arvores daqui são realmente belas.");
 
-            Location lojaDoGail = new Location(LOCATION_ID_LOJA_DO_GAIL,
+            Local lojaDoGail = new Local(LOCATION_ID_LOJA_DO_GAIL,
                 "Loja do Lorthus Gail",
                 "Vamos fazer negocios hoje?");
             lojaDoGail.MissaoDisponivel = QuestByID(QUEST_ID_LUTA_GAIL);
 
-            Location quintalDoGail = new Location(LOCATION_ID_QUINTAL,
+            Local quintalDoGail = new Local(LOCATION_ID_QUINTAL,
                 "Quintal do Gail",
                 "Você avista um ringue, ele parece fazer isso sempre...");
             quintalDoGail.MonstroNolocal = MonsterByID(MONSTER_ID_GAIL);
 
-            Location barDoMoe = new Location(LOCATION_ID_BAR_DO_MOE,
+            Local barDoMoe = new Local(LOCATION_ID_BAR_DO_MOE,
                 "O bar do incrivel Moe.",
                 "Tem muita gente estranha aqui.");
             barDoMoe.MissaoDisponivel = QuestByID(QUEST_ID_MATAR_ORC);
 
-            Location cavernaDoOrc = new Location(LOCATION_ID_CAVERNA_DO_ORC,
+            Local cavernaDoOrc = new Local(LOCATION_ID_CAVERNA_DO_ORC,
                 "Uma caverna escura.",
                 "Você ouve muitos barulhos incompreensíveis.");
             cavernaDoOrc.MonstroNolocal = MonsterByID(MONSTER_ID_ORC);
 
-            Location cidadeAbandonada = new Location(LOCATION_ID_CIDADE_ABANDONADA,
+            Local cidadeAbandonada = new Local(LOCATION_ID_CIDADE_ABANDONADA,
                 "Um lugar abandonada da cidade.",
                 "Você encontra um mural de avisos que te chama atenção.",
                 ItemByID(ITEM_ID_CHAVE));
@@ -159,15 +159,15 @@
             //cidadeAbandonada.MissaoDisponivel = QuestByID(QUEST_ID_LUTA_FINAL);
             //ItemByID(ITEM_ID_CHAVE);
 
-            Location centro = new Location(LOCATION_ID_CENTRO,
+            Local centro = new Local(LOCATION_ID_CENTRO,
                 "O centro é lugar movimentado.",
                 "Tem bastante comercio por aqui.");
 
-            Location ponte = new Location(LOCATION_ID_PONTE,
+            Local ponte = new Local(LOCATION_ID_PONTE,
                 "Ponte",
                 "Uma ponte de pedra que atravessa um rio." + Environment.NewLine + "Gravado em uma placa você lê: PELO AMOR DE DEUS, EXTERMINE MUNRAH DA TERRA!!!");
 
-            Location torreDoDragao = new Location(LOCATION_ID_TORRE_DO_DRAGAO,
+            Local torreDoDragao = new Local(LOCATION_ID_TORRE_DO_DRAGAO,
                 "Uma torre alta.",
                 "Você vê restos do que já foi uma igreja..." + Environment.NewLine + "O som parece perturbador.");
             torreDoDragao.MonstroNolocal = MonsterByID(MONSTER_ID_MUNRAH);
@@ -226,10 +226,10 @@
             return null;
         }
 
-        public static Monster MonsterByID(int id)
+        public static Monstro MonsterByID(int id)
         {
             foreach
-            (Monster monster in Monstros)
+            (Monstro monster in Monstros)
             {
                 if (monster.ID == id)
                 {
@@ -252,10 +252,10 @@
             return null;
         }
 
-        public static Location LocationByID(int id)
+        public static Local LocationByID(int id)
         {
             foreach
-                (Location local in Locais)
+                (Local local in Locais)
             {
                 if (local.ID == id)
                 {

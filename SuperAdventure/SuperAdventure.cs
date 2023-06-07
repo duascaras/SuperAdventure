@@ -1,20 +1,21 @@
 using Engine;
+using System.Numerics;
 
 namespace SuperAdventure
 {
     public partial class SuperAdventure : Form
     {
         private Player _player;
-        private Monster _currentMonster;
+        private Monstro _currentMonster;
 
         public SuperAdventure()
         {
             InitializeComponent();
 
             _player = new Player(10, 10, 20, 0);
-            MoveTo(World.LocationByID(World.LOCATION_ID_CASA));
-            _player.Inventario.Add(new ItemDeInventario(World.ItemByID(World.ITEM_ID_ESPADA_ENFERRUJADA), 1));
-            _player.Inventario.Add(new ItemDeInventario(World.ItemByID(World.ITEM_ID_PORRETA), 1));
+            MoveTo(Mundo.LocationByID(Mundo.LOCATION_ID_CASA));
+            _player.Inventario.Add(new ItemDeInventario(Mundo.ItemByID(Mundo.ITEM_ID_ESPADA_ENFERRUJADA), 1));
+            _player.Inventario.Add(new ItemDeInventario(Mundo.ItemByID(Mundo.ITEM_ID_PORRETA), 1));
 
             lblHitPoints.Text = _player.HpAtual.ToString();
             lblGold.Text = _player.Ouro.ToString();
@@ -22,7 +23,7 @@ namespace SuperAdventure
             lblLevel.Text = _player.Nivel.ToString();
         }
 
-        private void MoveTo(Location newLocation)
+        private void MoveTo(Local newLocation)
         {
             if (!_player.PossuiItemNecessarioParaAcessar(newLocation))
             {
@@ -82,7 +83,8 @@ namespace SuperAdventure
                             rtbMensagens.Text += newLocation.MissaoDisponivel.RecompensaItem.Nome + Environment.NewLine;
                             rtbMensagens.Text += Environment.NewLine;
 
-                            _player.PontosDeExperiencia += newLocation.MissaoDisponivel.RecompensaExperiencia;
+                            //_player.PontosDeExperiencia += newLocation.MissaoDisponivel.RecompensaExperiencia;
+                            _player.AddExperiencePoints(newLocation.MissaoDisponivel.RecompensaExperiencia);
                             _player.Ouro += newLocation.MissaoDisponivel.RecompensaOuro;
 
                             _player.AdicionaItemAoInventario(newLocation.MissaoDisponivel.RecompensaItem);
@@ -98,7 +100,7 @@ namespace SuperAdventure
                     rtbMensagens.Text += newLocation.MissaoDisponivel.Descricao + Environment.NewLine;
                     rtbMensagens.Text += "Para completar ela, retorne nesse local com:" + Environment.NewLine;
 
-                    foreach (QuestCompletionItem qci in newLocation.MissaoDisponivel.ItensMissaoCompleta)
+                    foreach (ItemQuestCompleta qci in newLocation.MissaoDisponivel.ItensMissaoCompleta)
                     {
                         if (qci.Quantidade == 1)
                         {
@@ -119,10 +121,10 @@ namespace SuperAdventure
                 rtbMensagens.Text += "Você vê: " + newLocation.MonstroNolocal.Nome + Environment.NewLine;
 
                 //criando um monstro
-                Monster standardMonster = World.MonsterByID(newLocation.MonstroNolocal.ID);
-                _currentMonster = new Monster(standardMonster.ID, standardMonster.Nome, standardMonster.DanoMaximo, standardMonster.RecompensaExperiencia, standardMonster.RecompensaOuro, standardMonster.HpAtual, standardMonster.HpMaximo);
+                Monstro standardMonster = Mundo.MonsterByID(newLocation.MonstroNolocal.ID);
+                _currentMonster = new Monstro(standardMonster.ID, standardMonster.Nome, standardMonster.DanoMaximo, standardMonster.RecompensaExperiencia, standardMonster.RecompensaOuro, standardMonster.HpAtual, standardMonster.HpMaximo);
 
-                foreach (LootItem lootItem in standardMonster.Loot)
+                foreach (ItemDeLoot lootItem in standardMonster.Loot)
                 {
                     _currentMonster.Loot.Add(lootItem);
                 }
@@ -182,14 +184,14 @@ namespace SuperAdventure
 
         private void AtualizaArmas()
         {
-            List<Weapon> weapons = new List<Weapon>();
+            List<Arma> weapons = new List<Arma>();
             foreach (ItemDeInventario inventoryItem in _player.Inventario)
             {
-                if (inventoryItem.Detalhes is Weapon)
+                if (inventoryItem.Detalhes is Arma)
                 {
                     if (inventoryItem.Quantidade > 0)
                     {
-                        weapons.Add((Weapon)inventoryItem.Detalhes);
+                        weapons.Add((Arma)inventoryItem.Detalhes);
                     }
                 }
             }
@@ -201,10 +203,23 @@ namespace SuperAdventure
             }
             else
             {
+                //    cboArmas.DataSource = weapons;
+                //    cboArmas.DisplayMember = "Nome";
+                //    cboArmas.ValueMember = "ID";
+                //    cboArmas.SelectedIndex = 0;
+                cboArmas.SelectedIndexChanged -= cboWeapons_SelectedIndexChanged;
                 cboArmas.DataSource = weapons;
+                cboArmas.SelectedIndexChanged += cboWeapons_SelectedIndexChanged;
                 cboArmas.DisplayMember = "Nome";
                 cboArmas.ValueMember = "ID";
-                cboArmas.SelectedIndex = 0;
+                if (_player.ArmaAtual != null)
+                {
+                    cboArmas.SelectedItem = _player.ArmaAtual;
+                }
+                else
+                {
+                    cboArmas.SelectedIndex = 0;
+                }
             }
         }
 
@@ -258,8 +273,8 @@ namespace SuperAdventure
 
         private void btnUsarArma_Click(object sender, EventArgs e)
         {
-            Weapon currentWeapon = (Weapon)cboArmas.SelectedItem;
-            int damageToMonster = RandomNumberGeneorcr.NumeroEntreValores(currentWeapon.DanoMinimo, currentWeapon.DanoMaximo);
+            Arma currentWeapon = (Arma)cboArmas.SelectedItem;
+            int damageToMonster = GeradorDeNumeroAleatorio.NumeroEntreValores(currentWeapon.DanoMinimo, currentWeapon.DanoMaximo);
             _currentMonster.HpAtual -= damageToMonster;
             rtbMensagens.Text += "Você deu " + _currentMonster.Nome + " pontos de " +
             damageToMonster.ToString() + " dano." + Environment.NewLine;
@@ -271,7 +286,8 @@ namespace SuperAdventure
                  Environment.NewLine;
 
                 // Incrementa o XP
-                _player.PontosDeExperiencia += _currentMonster.RecompensaExperiencia;
+                //_player.PontosDeExperiencia += _currentMonster.RecompensaExperiencia;
+                _player.AddExperiencePoints(_currentMonster.RecompensaExperiencia);
                 rtbMensagens.Text += "Você recebeu " +
                  _currentMonster.RecompensaExperiencia.ToString() +
                  " pontos de experiência" + Environment.NewLine;
@@ -286,9 +302,9 @@ namespace SuperAdventure
                 List<ItemDeInventario> lootedItems = new List<ItemDeInventario>();
 
                 // Adiciona itens ao inventário, usando a porcentagem do drop
-                foreach (LootItem lootItem in _currentMonster.Loot)
+                foreach (ItemDeLoot lootItem in _currentMonster.Loot)
                 {
-                    if (RandomNumberGeneorcr.NumeroEntreValores(1, 100) <= lootItem.PorcentagemDrop)
+                    if (GeradorDeNumeroAleatorio.NumeroEntreValores(1, 100) <= lootItem.PorcentagemDrop)
                     {
                         lootedItems.Add(new ItemDeInventario(lootItem.Detalhes, 1));
                     }
@@ -297,7 +313,7 @@ namespace SuperAdventure
                 // Dropa o padrão, caso nenhum de cima tenha retornado.s
                 if (lootedItems.Count == 0)
                 {
-                    foreach (LootItem lootItem in _currentMonster.Loot)
+                    foreach (ItemDeLoot lootItem in _currentMonster.Loot)
                     {
                         if (lootItem.ItemPadrao)
                         {
@@ -342,7 +358,7 @@ namespace SuperAdventure
             }
             else //monstro não morreu
             {
-                int damageToPlayer = RandomNumberGeneorcr.NumeroEntreValores(0, _currentMonster.DanoMaximo);
+                int damageToPlayer = GeradorDeNumeroAleatorio.NumeroEntreValores(0, _currentMonster.DanoMaximo);
                 rtbMensagens.Text += "O " + _currentMonster.Nome + " deu " + damageToPlayer.ToString() + " pontos de dano." + Environment.NewLine;
                 _player.HpAtual -= damageToPlayer;
                 lblHitPoints.Text = _player.HpAtual.ToString();
@@ -352,7 +368,7 @@ namespace SuperAdventure
                     rtbMensagens.Text += "Você morreu." +
                     Environment.NewLine;
                     // Respawna player na casa.
-                    MoveTo(World.LocationByID(World.LOCATION_ID_CASA));
+                    MoveTo(Mundo.LocationByID(Mundo.LOCATION_ID_CASA));
                 }
             }
             RolagemDasMensagens();
@@ -380,7 +396,7 @@ namespace SuperAdventure
             rtbMensagens.Text += "Você usou: " + potion.Nome + Environment.NewLine;
 
             // Após usar a poção, o turno é do monstro.
-            int damageToPlayer = RandomNumberGeneorcr.NumeroEntreValores(0, _currentMonster.DanoMaximo);
+            int damageToPlayer = GeradorDeNumeroAleatorio.NumeroEntreValores(0, _currentMonster.DanoMaximo);
             rtbMensagens.Text += "Você recebeu: " + _currentMonster.Nome +
             damageToPlayer.ToString() + " pontos de dano." + Environment.NewLine;
             _player.HpAtual -= damageToPlayer;
@@ -389,7 +405,7 @@ namespace SuperAdventure
             {
                 rtbMensagens.Text += "Você morreu." +
                 Environment.NewLine;
-                MoveTo(World.LocationByID(World.LOCATION_ID_CASA)); //respawna player na casa.
+                MoveTo(Mundo.LocationByID(Mundo.LOCATION_ID_CASA)); //respawna player na casa.
             }
 
             lblHitPoints.Text = _player.HpAtual.ToString();
@@ -402,6 +418,11 @@ namespace SuperAdventure
         {
             rtbMensagens.SelectionStart = rtbMensagens.Text.Length;
             rtbMensagens.ScrollToCaret();
+        }
+
+        private void cboWeapons_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            _player.ArmaAtual = (Arma)cboArmas.SelectedItem;
         }
 
         private void btnMap_Click(object sender, EventArgs e)

@@ -8,7 +8,7 @@
         public int RecompensaExperiencia { get; set; }
         public int RecompensaOuro { get; set; }
         public Item RecompensaItem { get; set; }
-        public List<QuestCompletionItem> ItensMissaoCompleta { get; set; }
+        public List<ItemQuestCompleta> ItensMissaoCompleta { get; set; }
 
         public Quest(int id, string nome, string description, int recompensaExperiencia, int recompensaOuro)
         {
@@ -17,7 +17,7 @@
             Descricao = description;
             RecompensaExperiencia = recompensaExperiencia;
             RecompensaOuro = recompensaOuro;
-            ItensMissaoCompleta = new List<QuestCompletionItem>();
+            ItensMissaoCompleta = new List<ItemQuestCompleta>();
         }
     }
 }

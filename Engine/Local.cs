@@ -1,19 +1,19 @@
 ﻿namespace Engine
 {
-    public class Location
+    public class Local
     {
         public int ID { get; set; }
         public string Nome { get; set; }
         public string Descricao { get; set; }
         public Item ItemNecessarioParaEntrar { get; set; }
         public Quest MissaoDisponivel { get; set; }
-        public Monster MonstroNolocal { get; set; }
-        public Location LocalParaCima { get; set; }
-        public Location LocalParaDireita { get; set; }
-        public Location LocalParaBaixo { get; set; }
-        public Location LocalParaEsquerda { get; set; }
+        public Monstro MonstroNolocal { get; set; }
+        public Local LocalParaCima { get; set; }
+        public Local LocalParaDireita { get; set; }
+        public Local LocalParaBaixo { get; set; }
+        public Local LocalParaEsquerda { get; set; }
 
-        public Location(int id, string nome, string descricao, Item itemNecessarioParaEntrar = null, Quest missaoDisponivel = null, Monster monstroNolocal = null)
+        public Local(int id, string nome, string descricao, Item itemNecessarioParaEntrar = null, Quest missaoDisponivel = null, Monstro monstroNolocal = null)
         {
             ID = id;
             Nome = nome;

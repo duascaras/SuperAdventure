@@ -1,16 +1,20 @@
-﻿namespace Engine
+﻿using System.Reflection.Emit;
+
+namespace Engine
 {
-    public class Player : LivingCreature
+    public class Player : CriaturaViva
     {
         public int Ouro { get; set; }
-        public int PontosDeExperiencia { get; set; }
+        public int PontosDeExperiencia { get; private set; }
         public int Nivel
         {
             get { return ((PontosDeExperiencia / 100) + 1); }
         }
+        public Arma ArmaAtual { get; set; }
+
         public List<ItemDeInventario> Inventario { get; set; }
         public List<PlayerQuest> Missoes { get; set; }
-        public Location LocalAtual { get; set; }
+        public Local LocalAtual { get; set; }
 
         public Player(int hpAtual, int hpMaximo, int ouro, int pontosDeExperiencia) : base(hpAtual, hpMaximo)
         {
@@ -20,7 +24,13 @@
             Missoes = new List<PlayerQuest>();
         }
 
-        public bool PossuiItemNecessarioParaAcessar(Location local)
+        public void AddExperiencePoints(int pontosDeExperienciaParaAdicionar)
+        {
+            PontosDeExperiencia += pontosDeExperienciaParaAdicionar;
+            HpMaximo = (Nivel * 10);
+        }
+
+        public bool PossuiItemNecessarioParaAcessar(Local local)
         {
             if (local.ItemNecessarioParaEntrar == null)
             {
@@ -64,7 +74,7 @@
 
         public bool PossuiItensParaCompletarMissao(Quest missao)
         {
-            foreach (QuestCompletionItem qci in missao.ItensMissaoCompleta)
+            foreach (ItemQuestCompleta qci in missao.ItensMissaoCompleta)
             {
                 bool foundItemInPlayersInventory = false;
 
@@ -92,7 +102,7 @@
 
         public void RemoveItensDaMissaoCompletada(Quest missao) // como se o player estivesse devolvendo o item que ele foi buscar na missão
         {
-            foreach (QuestCompletionItem qci in missao.ItensMissaoCompleta)
+            foreach (ItemQuestCompleta qci in missao.ItensMissaoCompleta)
             {
                 foreach (ItemDeInventario ii in Inventario)
                 {

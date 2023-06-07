@@ -1,6 +1,6 @@
 ﻿namespace Engine
 {
-    public static class RandomNumberGeneorcr
+    public static class GeradorDeNumeroAleatorio
     {
         private static Random _geneorcr = new Random();
 
